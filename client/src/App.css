@@ -1,0 +1,104 @@
+@import "~antd/dist/reset.css";
+
+:root {
+  --primary: #055802;
+  --primary-light: rgb(4, 110, 0);
+  --primary-xlight: #3e863c;
+  --primary-md: #044602;
+  --primary-bold: #043b02;
+  --secondary: #0c0c0c;
+  --secondary-light: #414141;
+  --secondary-xlight: #a3a3a3;
+  --secondary-bold: #000000;
+  --light: #c9c9c9;
+  --xlight:#e6e6e6;
+  --white: #ffffff;
+}
+
+.App {
+  text-align: left !important;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+
+/*==================== Theming Start ================================*/
+a:hover {
+  color: initial !important;
+}
+/* .primary-bg { */
+.th-bg-primary-bold {
+  background-color: var(--primary-bold);
+}
+
+.th-bg-primary {
+  background-color: var(--primary);
+}
+
+.th-bg-secondary {
+  background-color: var(--secondary);
+}
+
+.th-text-primary {
+  color: var(--primary);
+}
+
+.th-text-secondary {
+  color: var(--secondary);
+}
+
+.th-text-white {
+  color: var(--white);
+}
+
+.activeClass {
+  background-color: #055802bb;
+  color: var(--white) !important;
+  font-weight: 600;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+.activeClass:hover {
+  background-color: #055802bb;
+  color: var(--light) !important;
+  font-weight: 600;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+
+/*==================== Theming End ================================*/
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: var(--white);
+}
+
+/* .App-link {
+  color: #61dafb;
+} */
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

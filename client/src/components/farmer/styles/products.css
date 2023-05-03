@@ -1,0 +1,8 @@
+.products {
+    min-width: 950px;
+    /* overflow-x: scroll; */
+}
+
+.products .ant-table-wrapper {
+    overflow-x: scroll;
+}
