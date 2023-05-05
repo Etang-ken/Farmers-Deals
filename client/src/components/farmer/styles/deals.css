@@ -1,0 +1,7 @@
+.deals .table-div {
+    overflow-x: scroll;
+}
+
+.deals #deals-table {
+    min-width: 1250px;
+}

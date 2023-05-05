@@ -248,6 +248,22 @@ export default function Products() {
   //     address: `London, Park Lane no. ${i}`,
   //   });
   // }
+
+  const actionFunc = (viewUrl, editUrl, deleteUrl) => {
+    return (
+      <div className="flex gap-3">
+        <Link to={viewUrl} className="flex items-center">
+          <EyeOutlined className="text-green-600 font-extrabold text-lg" />
+        </Link>
+        <Link to={editUrl} className="flex items-center text-lg">
+          <EditOutlined className="text-blue-600 font-extrabold" />
+        </Link>
+        <Link to={deleteUrl} className="flex items-center" danger>
+          <DeleteOutlined className="text-red-500 font-extrabold text-lg" />
+        </Link>
+      </div>
+    )
+  }
   const data = [
     {
       key: "1",
@@ -256,19 +272,7 @@ export default function Products() {
       category: "Cash Crop",
       price: 5500 + " frs per 20 liters",
       quantity: "9 300kg bags",
-      action: (
-        <div className="flex gap-3">
-          <Link to="/farmer-products" className="flex items-center">
-            <EyeOutlined className="text-green-600" />
-          </Link>
-          <Link to="/farmer-products" className="flex items-center">
-            <EditOutlined className="text-blue-600" />
-          </Link>
-          <Link to="/farmer-products" className="flex items-center" danger>
-            <DeleteOutlined className="text-red-500 font-extrabold" />
-          </Link>
-        </div>
-      ),
+      action: actionFunc("/farmer-1", "/farmer-2", "/farmer-3"),
     },
     {
       key: "2",
@@ -277,23 +281,7 @@ export default function Products() {
       category: "Food Crop",
       price: 4500 + " frs per 20 liters",
       quantity: "10 300kg bags",
-      action: (
-        <div className="flex gap-3">
-          <Link to="/farmer-products" className="flex items-center">
-            <EyeOutlined className="text-green-600" />
-          </Link>
-          <Link to="/farmer-products" className="flex items-center">
-            <EditOutlined className="text-blue-600" />
-          </Link>
-          <Link
-            to="/farmer-products"
-            className="flex items-center text-red-500"
-            danger
-          >
-            <DeleteOutlined className="text-red-500 font-extrabold" />
-          </Link>
-        </div>
-      ),
+      action: actionFunc("/farmer-4", "/farmer-5", "/farmer-6"),
     },
     {
       key: "3",
@@ -302,19 +290,7 @@ export default function Products() {
       category: "Cash Crop",
       price: 7000 + " frs per 20 liters",
       quantity: "5 300kg bags",
-      action: (
-        <div className="flex gap-3">
-          <Link to="/farmer-products" className="flex items-center">
-            <EyeOutlined className="text-green-600" />
-          </Link>
-          <Link to="/farmer-products" className="flex items-center">
-            <EditOutlined className="text-blue-600" />
-          </Link>
-          <Link to="/farmer-products" className="flex items-center" danger>
-            <DeleteOutlined className="text-red-500 font-extrabold" />
-          </Link>
-        </div>
-      ),
+      action: actionFunc("/farmer-7", "/farmer-8", "/farmer-9"),
     },
     {
       key: "4",
@@ -323,19 +299,7 @@ export default function Products() {
       category: "Food Crop",
       price: 2300 + " frs per 20 liters",
       quantity: "7 300kg bags",
-      action: (
-        <div className="flex gap-3">
-          <Link to="/farmer-products" className="flex items-center">
-            <EyeOutlined className="text-green-600" />
-          </Link>
-          <Link to="/farmer-products" className="flex items-center">
-            <EditOutlined className="text-blue-600" />
-          </Link>
-          <Link to="/farmer-products" className="flex items-center" danger>
-            <DeleteOutlined className="text-red-500 font-extrabold" />
-          </Link>
-        </div>
-      ),
+      action: actionFunc("/farmer-11", "/farmer-12", "/farmer-13"),
     },
   ];
   const onChange = (pagination, filters, sorter, extra) => {
@@ -345,7 +309,13 @@ export default function Products() {
     <div className="products" style={{ textAlign: "left" }}>
       <Dashboard title="Products">
         <h1 className="text-xl">Products</h1>
-        <Table columns={columns} dataSource={data} pagination={3} />
+        <div className="table-div">
+          <Table
+            columns={columns}
+            dataSource={data}
+            id="deals-table"
+          />
+        </div>
       </Dashboard>
     </div>
   );

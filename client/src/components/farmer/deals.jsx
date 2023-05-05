@@ -2,10 +2,10 @@ import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Table, Button, Input, Space } from "antd";
 import {
-  DeleteOutlined,
-  EditOutlined,
   SearchOutlined,
-  EyeOutlined,
+  CheckCircleFilled,
+  CloseCircleFilled,
+  ExclamationCircleFilled,
 } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import Dashboard from "./layouts/dashboard";
@@ -199,6 +199,14 @@ export default function Deals() {
   });
   const columns = [
     {
+      title: "Buyer",
+      dataIndex: "buyer",
+      key: "buyer",
+      // width: "30%",
+      ...getColumnSearchProps("buyer"),
+      sorter: (a, b) => a.buyer.length - b.buyer.length,
+    },
+    {
       title: "Product Image",
       dataIndex: "product_image",
       key: "product_image",
@@ -235,8 +243,23 @@ export default function Deals() {
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Action",
-      dataIndex: "action",
+      title: "Total Price",
+      dataIndex: "total_price",
+      key: "total_price",
+    },
+    {
+      title: "Deal Request Date",
+      dataIndex: "deal_request_date",
+      key: "deal_request_date",
+    },
+    {
+      title: "Done / Cancelled Deal Date",
+      dataIndex: "done_deal_date",
+      key: "done_deal_date",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
     },
   ];
   // const data = [];
@@ -251,89 +274,73 @@ export default function Deals() {
   const data = [
     {
       key: "1",
+      buyer: "Etang Kencliff",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Irish Potato",
       product_category: "Cash Crop",
       price: 5500 + " frs per 20 liters",
-      quantity: "9 300kg bags",
-      action: (
-        <div className="flex gap-3">
-          <Link to="/farmer-deals" className="flex items-center">
-            <EyeOutlined className="text-green-600" />
-          </Link>
-          <Link to="/farmer-deals" className="flex items-center">
-            <EditOutlined className="text-blue-600" />
-          </Link>
-          <Link to="/farmer-deals" className="flex items-center" danger>
-            <DeleteOutlined className="text-red-500 font-extrabold" />
-          </Link>
+      quantity: "4 300kg bags",
+      total_price: 5500 * 4 + " frs",
+      deal_request_date: "30-Jan-2023",
+      done_deal_date: "03-Feb-2023",
+      status: (
+        <div className="flex gap-2 items-center">
+          <CheckCircleFilled className="text-green-600" />
+          Done
         </div>
       ),
     },
     {
       key: "2",
+      buyer: "John Doe",
       product_image: <img src={image} height="50" width="50" />,
-      product_name: 'Cocoyam',
+      product_name: "Cocoyam",
       product_category: "Food Crop",
       price: 4500 + " frs per 20 liters",
-      quantity: "10 300kg bags",
-      action: (
-        <div className="flex gap-3">
-          <Link to="/farmer-deals" className="flex items-center">
-            <EyeOutlined className="text-green-600" />
-          </Link>
-          <Link to="/farmer-deals" className="flex items-center">
-            <EditOutlined className="text-blue-600" />
-          </Link>
-          <Link
-            to="/farmer-deals"
-            className="flex items-center text-red-500"
-            danger
-          >
-            <DeleteOutlined className="text-red-500 font-extrabold" />
-          </Link>
+      quantity: "2 300kg bags",
+      total_price: 4500 * 2 + " frs",
+      deal_request_date: "28-Apr-2023",
+      done_deal_date: "-",
+      status: (
+        <div className="flex gap-2 items-center">
+          <ExclamationCircleFilled className="text-yellow-500" />
+          Pending
         </div>
       ),
     },
     {
       key: "3",
+      buyer: "Emilie Church",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Tomato",
       product_category: "Cash Crop",
       price: 7000 + " frs per 20 liters",
-      quantity: "5 300kg bags",
-      action: (
-        <div className="flex gap-3">
-          <Link to="/farmer-deals" className="flex items-center">
-            <EyeOutlined className="text-green-600" />
-          </Link>
-          <Link to="/farmer-deals" className="flex items-center">
-            <EditOutlined className="text-blue-600" />
-          </Link>
-          <Link to="/farmer-deals" className="flex items-center" danger>
-            <DeleteOutlined className="text-red-500 font-extrabold" />
-          </Link>
+      quantity: "1 300kg bags",
+      total_price: 7000 * 1 + " frs",
+      deal_request_date: "30-April-2023",
+      done_deal_date: "-",
+      status: (
+        <div className="flex gap-2 items-center">
+          <ExclamationCircleFilled className="text-yellow-500" />
+          Pending
         </div>
       ),
     },
     {
       key: "4",
+      buyer: "Lila Cruz",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Egusi",
       product_category: "Food Crop",
       price: 2300 + " frs per 20 liters",
-      quantity: "7 300kg bags",
-      action: (
-        <div className="flex gap-3">
-          <Link to="/farmer-deals" className="flex items-center">
-            <EyeOutlined className="text-green-600" />
-          </Link>
-          <Link to="/farmer-deals" className="flex items-center">
-            <EditOutlined className="text-blue-600" />
-          </Link>
-          <Link to="/farmer-deals" className="flex items-center" danger>
-            <DeleteOutlined className="text-red-500 font-extrabold" />
-          </Link>
+      quantity: "3 300kg bags",
+      total_price: 2300 * 3 + " frs",
+      deal_request_date: "22-Mar-2023",
+      done_deal_date: "29-Mar-2023",
+      status: (
+        <div className="flex gap-2 items-center">
+          <CloseCircleFilled className="text-red-600" />
+          Cancelled
         </div>
       ),
     },
@@ -344,8 +351,22 @@ export default function Deals() {
   return (
     <div className="deals" style={{ textAlign: "left" }}>
       <Dashboard title="Deals">
-        <h1 className="text-xl">Deals</h1>
-        <Table columns={columns} dataSource={data} pagination={3} />
+        <div className="flex w-full">
+          <h1 className="text-xl">Deals</h1>
+          {/* <div className="ml-auto">
+            <Link to="/farmer-deal-requests" className="secondary-button">
+              View Deal Requests
+            </Link>
+          </div> */}
+        </div>
+        <div className="table-div">
+          <Table
+            columns={columns}
+            dataSource={data}
+            pagination={3}
+            id="deals-table"
+          />
+        </div>
       </Dashboard>
     </div>
   );

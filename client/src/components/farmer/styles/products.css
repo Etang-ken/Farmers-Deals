@@ -1,8 +1,7 @@
-.products {
-    min-width: 950px;
-    /* overflow-x: scroll; */
-}
-
-.products .ant-table-wrapper {
+.products .table-div {
     overflow-x: scroll;
 }
+
+/* .products #deals-table {
+    min-width: 1250px;
+} */

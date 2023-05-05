@@ -39,12 +39,11 @@ const contentStyle = {
 };
 const siderStyle = {
   lineHeight: "100%",
-  //   height: '100%',
+  height: '100%',
   color: "var(--secondary)",
   backgroundColor: "var(--white)",
-  position: "sticky",
-  top: 64,
-  zIndex: 1,
+  // top: 64,
+  zIndex: 10,
 };
 const footerStyle = {
   color: "var(--primary-bold)",
@@ -91,8 +90,8 @@ export default function Dashboard(props) {
           
         </Header>
         <Layout>
-          <Sider style={siderStyle} className="fixed hidden md:block">
-            <Menu mode="inline" style={siderStyle} className="">
+          <Sider style={siderStyle} className="!fixed hidden md:block">
+            <Menu mode="inline" className="">
               <Menu.Item key="Dashboard" className="hover:!bg-white">
                 <NavLink
                   className={({ isActive, isPending }) =>
@@ -201,8 +200,8 @@ export default function Dashboard(props) {
           </Sider>
 
 
-          {/* mobile sider  */} {
-            <Sider style={siderStyle} className="fixed sm:block md:hidden" collapsible collapsedWidth="0">
+          {/* mobile sider  */} 
+            <Sider style={siderStyle} className="!fixed sm:block md:hidden" collapsible collapsedWidth="0">
             <Menu mode="inline" style={siderStyle} className="">
               <Menu.Item key="Dashboard" className="hover:!bg-white">
                 <NavLink
@@ -310,21 +309,21 @@ export default function Dashboard(props) {
               </SubMenu> */}
             </Menu>
           </Sider>
-          }
+          
 
           <Layout>
-            <Content style={{ padding: "0 50px" }}>
+          <Content className="sm:!px-0 sm:ml-0 md:ml-48 px-1 md:!pl-11 md:!pr-9">
               <Breadcrumb style={{ margin: "16px 0" }}>
                 <Breadcrumb.Item>Farmer</Breadcrumb.Item>
                 <Breadcrumb.Item>{props.title}</Breadcrumb.Item>
               </Breadcrumb>
-              <div style={{ background: "#fff", padding: 24, minHeight: 580 }}>
+              <div style={{ background: "#fff", padding: 24, minHeight: 580 }} className="mx-2 md:mx-0">
                 {props.children}
               </div>
             </Content>
             {/* <CareerDetails player={selectedPlayer} visible={visible} onClose={onClose} /> */}
             <Footer style={footerStyle}>
-              Ant Design Layout example Created by Kencliff
+              Created by Kencliff
             </Footer>
           </Layout>
         </Layout>

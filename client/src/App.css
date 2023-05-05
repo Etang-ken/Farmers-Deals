@@ -11,8 +11,92 @@
   --secondary-xlight: #a3a3a3;
   --secondary-bold: #000000;
   --light: #c9c9c9;
-  --xlight:#e6e6e6;
+  --xlight: #e6e6e6;
   --white: #ffffff;
+}
+
+/* Poppins font */
+@font-face {
+  font-family: "Poppins-Light";
+  src: url("../public/fonts/Poppins/Poppins-Light.ttf");
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../public/fonts/Poppins/Poppins-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Poppins-Medium";
+  src: url("../public/fonts/Poppins/Poppins-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Poppins-SemiBold";
+  src: url("../public/fonts/Poppins/Poppins-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "Poppins-Bold";
+  src: url("../public/fonts/Poppins/Poppins-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Poppins-ExtraBold";
+  src: url("../public/fonts/Poppins/Poppins-ExtraBold.ttf");
+}
+
+/* Inter font  */
+@font-face {
+  font-family: "Inter-Light";
+  src: url("../public/fonts/Inter/Inter-Light.ttf");
+}
+
+@font-face {
+  font-family: "Inter-ExtraLight";
+  src: url("../public/fonts/Inter/Inter-ExtraLight.ttf");
+}
+
+@font-face {
+  font-family: "Inter-Regular";
+  src: url("../public/fonts/Inter/Inter-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Inter-Medium";
+  src: url("../public/fonts/Inter/Inter-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Inter-SemiBold";
+  src: url("../public/fonts/Inter/Inter-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "Inter-Bold";
+  src: url("../public/fonts/Inter/Inter-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Inter-ExtraBold";
+  src: url("../public/fonts/Inter/Inter-ExtraBold.ttf");
+}
+
+/* * {
+  font-family: Inter-Regular;
+} */
+* {
+  font-family: Poppins !important;
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
 }
 
 .App {
@@ -24,8 +108,22 @@
   pointer-events: none;
 }
 
-
 /*==================== Theming Start ================================*/
+.heading-3 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.heading-4 {
+  font-size: 1rem;
+  line-height: 1.75rem;
+}
+
+.short-border {
+  border-bottom: 3px solid var(--primary);
+  /* width: 50%; */
+}
+
 a:hover {
   color: initial !important;
 }
@@ -55,7 +153,7 @@ a:hover {
 }
 
 .activeClass {
-  background-color: #055802bb;
+  background-color: var(--primary-bold);
   color: var(--white) !important;
   font-weight: 600;
   padding-left: 10px;
@@ -63,13 +161,70 @@ a:hover {
 }
 
 .activeClass:hover {
-  background-color: #055802bb;
-  color: var(--light) !important;
+  background-color: #043b02d7;
+  color: var(--white) !important;
   font-weight: 600;
   padding-left: 10px;
   border-radius: 5px;
 }
 
+.primary-button {
+  border: 2px solid var(--primary);
+  background-color: var(--primary);
+  border-radius: 5px;
+  font-weight: 700;
+  padding: 10px 24px !important;
+  height: auto !important;
+  color: var(--white);
+}
+
+.secondary-button {
+  border: 2px solid var(--primary);
+  border-radius: 5px;
+  font-weight: 700;
+  padding: 10px 24px;
+  height: auto !important;
+  color: var(--primary);
+}
+
+.primary-button:hover,
+.primary-button:focus,
+.primary-button:active {
+  background-color: var(--white);
+  border: 2px solid var(--primary) !important;
+  color: var(--primary) !important;
+}
+
+.secondary-button:hover,
+.secondary-button:focus,
+.secondary-button:active {
+  background-color: var(--primary);
+  color: var(--white) !important;
+}
+
+/* antd style modifications  */
+.ant-layout .ant-layout-sider-zero-width-trigger {
+  background-color: var(--primary-bold);
+}
+
+.ant-pagination .ant-pagination-item-active {
+  border-color: var(--primary);
+  border-width: 2px;
+  color: var(--primary);
+}
+
+.ant-pagination .ant-pagination-item-active a {
+  color: var(--primary);
+}
+
+.ant-pagination .ant-pagination-item-active:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--white) !important;
+}
+.ant-pagination .ant-pagination-item-active a:hover {
+  color: var(--white) !important;
+}
 
 /*==================== Theming End ================================*/
 
