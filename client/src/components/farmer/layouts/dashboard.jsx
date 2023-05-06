@@ -79,7 +79,7 @@ export default function Dashboard(props) {
           className="th-bg-primary-bold th-text-white"
         >
           {/* <Avatar style={{ float: 'right' }} src='./dp.png' /> */}
-          <Dropdown menu={{ items, }} className="float-right">
+          <Dropdown menu={{ items, }} trigger={['click']} className="float-right">
             <Link to="#" className="th-text-white w-auto">
               <Space>Drop Me <DownOutlined /></Space>
             </Link>
@@ -128,16 +128,16 @@ export default function Dashboard(props) {
                   <LikeOutlined className="pr-2" /> Deals
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="Deal Requests">
+              <Menu.Item key="Orders">
                 <NavLink
                   className={({ isActive, isPending }) =>
                     isActive
                       ? "flex items-center activeClass"
                       : "flex items-center"
                   }
-                  to="/farmer-deal-requests"
+                  to="/farmer-orders"
                 >
-                  <ShoppingCartOutlined className="pr-2" /> Deal Requests
+                  <ShoppingCartOutlined className="pr-2" /> Orders
                 </NavLink>
               </Menu.Item>
               <Menu.Item key="Images">
@@ -239,16 +239,16 @@ export default function Dashboard(props) {
                   <LikeOutlined className="pr-2" /> Deals
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="Deal Requests">
+              <Menu.Item key="Orders">
                 <NavLink
                   className={({ isActive, isPending }) =>
                     isActive
                       ? "flex items-center activeClass"
                       : "flex items-center"
                   }
-                  to="/farmer-deal-requests"
+                  to="/farmer-orders"
                 >
-                  <ShoppingCartOutlined className="pr-2" /> Deal Requests
+                  <ShoppingCartOutlined className="pr-2" /> Orders
                 </NavLink>
               </Menu.Item>
               <Menu.Item key="Images">

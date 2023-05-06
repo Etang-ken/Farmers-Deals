@@ -10,8 +10,8 @@
   --secondary-light: #414141;
   --secondary-xlight: #a3a3a3;
   --secondary-bold: #000000;
-  --light: #c9c9c9;
-  --xlight: #e6e6e6;
+  --light: #e2e2e2;
+  --xlight: #fcfcfc;
   --white: #ffffff;
 }
 
@@ -99,6 +99,14 @@ h6 {
   font-weight: 600;
 }
 
+.heading-1 {
+  @apply text-xl;
+}
+
+.font-inter {
+  font-family: Inter-Regular !important;
+}
+
 .App {
   text-align: left !important;
 }
@@ -117,6 +125,10 @@ h6 {
 .heading-4 {
   font-size: 1rem;
   line-height: 1.75rem;
+}
+
+p {
+  line-height: 1.5rem;
 }
 
 .short-border {
@@ -142,6 +154,10 @@ a:hover {
 
 .th-text-primary {
   color: var(--primary);
+}
+
+.th-text-primary-bold {
+  color: var(--primary-bold);
 }
 
 .th-text-secondary {
@@ -173,6 +189,18 @@ a:hover {
   background-color: var(--primary);
   border-radius: 5px;
   font-weight: 700;
+  letter-spacing: 0.1rem;
+  padding: 10px 24px !important;
+  height: auto !important;
+  color: var(--white);
+}
+
+.danger-button {
+  border: 2px solid rgb(211, 0, 0);
+  background-color: rgb(211, 0, 0);
+  border-radius: 5px;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
   padding: 10px 24px !important;
   height: auto !important;
   color: var(--white);
@@ -182,6 +210,7 @@ a:hover {
   border: 2px solid var(--primary);
   border-radius: 5px;
   font-weight: 700;
+  letter-spacing: 0.05rem;
   padding: 10px 24px;
   height: auto !important;
   color: var(--primary);
@@ -195,11 +224,30 @@ a:hover {
   color: var(--primary) !important;
 }
 
+.danger-button:hover,
+.danger-button:focus,
+.danger-button:active {
+  background-color: var(--white);
+  border: 2px solid rgb(211, 0, 0) !important;
+  color: rgb(211, 0, 0) !important;
+}
+
 .secondary-button:hover,
 .secondary-button:focus,
 .secondary-button:active {
   background-color: var(--primary);
   color: var(--white) !important;
+}
+
+.section-box {
+  height: auto;
+  width: 100%;
+  padding: 20px;
+  border: 0.12rem solid var(--primary);
+  border-right: 0;
+  border-radius: 10px;
+  background-color: var(--xlight);
+  /* margin: auto 0; */
 }
 
 /* antd style modifications  */
@@ -224,6 +272,19 @@ a:hover {
 }
 .ant-pagination .ant-pagination-item-active a:hover {
   color: var(--white) !important;
+}
+
+.ant-upload-wrapper .ant-upload-list.ant-upload-list-picture .ant-upload-list-item-error, 
+.ant-upload-wrapper .ant-upload-list.ant-upload-list-picture-card .ant-upload-list-item-error, 
+.ant-upload-wrapper .ant-upload-list.ant-upload-list-picture-circle .ant-upload-list-item-error {
+  border-color: var(--primary);
+}
+.ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-name {
+  color: var(--primary) !important;
+}
+.ant-btn-default:hover {
+  color: var(--primary) !important;
+  border-color: var(--primary) !important;
 }
 
 /*==================== Theming End ================================*/

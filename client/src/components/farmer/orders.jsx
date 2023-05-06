@@ -12,10 +12,10 @@ import {
 } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import Dashboard from "./layouts/dashboard";
-import "./styles/deal_requests.css";
+import "./styles/orders.css";
 import image from "./styles/image.jpg";
 
-export default function DealRequests() {
+export default function Orders() {
   // const columns = [
   //   {
   //     title: 'Name',
@@ -326,11 +326,11 @@ export default function DealRequests() {
     console.log("params", pagination, filters, sorter, extra);
   };
   return (
-    <div className="deal-requests" style={{ textAlign: "left" }}>
-      <Dashboard title="Deal Requests">
-        <h1 className="text-xl">Deal Requests</h1>
+    <div className="orders" style={{ textAlign: "left" }}>
+      <Dashboard title="Orders">
+        <h1 className="text-xl">Orders</h1>
         <div className="table-div">
-          <Table columns={columns} dataSource={data} id="deal-requests-table" />
+          <Table columns={columns} dataSource={data} id="orders-table" />
         </div>
       </Dashboard>
     </div>

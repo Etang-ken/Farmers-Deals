@@ -6,11 +6,12 @@ import {
   EditOutlined,
   SearchOutlined,
   EyeOutlined,
+  PlusOutlined
 } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
-import Dashboard from "./layouts/dashboard";
-import "./styles/products.css";
-import image from "./styles/image.jpg";
+import Dashboard from "../layouts/dashboard";
+import "../styles/products.css";
+import image from "../styles/image.jpg";
 
 export default function Products() {
   // const columns = [
@@ -262,8 +263,8 @@ export default function Products() {
           <DeleteOutlined className="text-red-500 font-extrabold text-lg" />
         </Link>
       </div>
-    )
-  }
+    );
+  };
   const data = [
     {
       key: "1",
@@ -272,12 +273,12 @@ export default function Products() {
       category: "Cash Crop",
       price: 5500 + " frs per 20 liters",
       quantity: "9 300kg bags",
-      action: actionFunc("/farmer-1", "/farmer-2", "/farmer-3"),
+      action: actionFunc("/farmer-products/6/show", "/farmer-products/6/edit", "/farmer-3"),
     },
     {
       key: "2",
       image: <img src={image} height="50" width="50" />,
-      name: 'Cocoyam',
+      name: "Cocoyam",
       category: "Food Crop",
       price: 4500 + " frs per 20 liters",
       quantity: "10 300kg bags",
@@ -308,13 +309,19 @@ export default function Products() {
   return (
     <div className="products" style={{ textAlign: "left" }}>
       <Dashboard title="Products">
-        <h1 className="text-xl">Products</h1>
+        <div className="flex flex-wrap items-center">
+          <h1 className="text-xl">Products</h1>
+          <div className="ml-auto pb-3">
+            <Link
+              to="/farmer-products/5/create"
+              className="primary-button flex w-fit  mt-auto"
+            >
+              <PlusOutlined className="pr-2 !font-extrabold" /> Add Product
+            </Link>
+          </div>
+        </div>
         <div className="table-div">
-          <Table
-            columns={columns}
-            dataSource={data}
-            id="deals-table"
-          />
+          <Table columns={columns} dataSource={data} id="deals-table" />
         </div>
       </Dashboard>
     </div>

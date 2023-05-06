@@ -1,7 +1,20 @@
 .products .table-div {
-    overflow-x: scroll;
+  overflow-x: scroll;
 }
 
 /* .products #deals-table {
     min-width: 1250px;
 } */
+
+.show-product .details {
+  height: auto;
+  width: 100%;
+  padding: 20px;
+  border: 0.12rem solid var(--primary);
+  border-right: 0;
+  border-top: 0;
+  /* @apply bg-slate-50; */
+  background: var(--xlight);
+  border-radius: 10px;
+  /* margin: auto 0; */
+}
