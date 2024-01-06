@@ -1,25 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Table } from "antd";
-import { PlusOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  EyeOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  ShoppingCartOutlined
+} from "@ant-design/icons";
 import Dashboard from "../layouts/dashboard";
 import DisplayProducts from "../fragments/display_products";
-import "../../styles/farmer/products.css";
+import "../../styles/buyer/products.css";
 
-import image from "../../styles/farmer/image.jpg";
+import image from "../../styles/buyer/image.jpg";
 
 export default function Products() {
-  const actionFunc = (viewUrl, editUrl, deleteUrl) => {
+  const actionFunc = (viewUrl, orderUrl) => {
     return (
       <div className="flex gap-3">
         <Link to={viewUrl} className="flex items-center">
-          <EyeOutlined className="text-green-600 font-extrabold text-lg" />
+          <EyeOutlined className="text-green-600 font-extrabold text-xl" />
         </Link>
-        <Link to={editUrl} className="flex items-center text-lg">
-          <EditOutlined className="text-blue-600 font-extrabold" />
-        </Link>
-        <Link to={deleteUrl} className="flex items-center" danger>
-          <DeleteOutlined className="text-red-500 font-extrabold text-lg" />
+        <Link to={orderUrl} className="flex items-center text-xl">
+          <ShoppingCartOutlined className="th-text-third font-extrabold" />
         </Link>
       </div>
     );
@@ -32,7 +35,10 @@ export default function Products() {
       category: "Cash Crop",
       price: 5500 + " frs per 20 liters",
       quantity: "9 300kg bags",
-      action: actionFunc("/farmer-products/6/show", "/farmer-products/6/edit", "/farmer-3"),
+      action: actionFunc(
+        "/buyer-products/6/show",
+        "/buyer-orders/create",
+      ),
     },
     {
       key: "2",
@@ -41,7 +47,7 @@ export default function Products() {
       category: "Food Crop",
       price: 4500 + " frs per 20 liters",
       quantity: "10 300kg bags",
-      action: actionFunc("/farmer-4", "/farmer-5", "/farmer-6"),
+      action: actionFunc("/buyer-4", "/buyer-5"),
     },
     {
       key: "3",
@@ -50,7 +56,7 @@ export default function Products() {
       category: "Cash Crop",
       price: 7000 + " frs per 20 liters",
       quantity: "5 300kg bags",
-      action: actionFunc("/farmer-7", "/farmer-8", "/farmer-9"),
+      action: actionFunc("/buyer-7", "/buyer-8"),
     },
     {
       key: "4",
@@ -59,24 +65,14 @@ export default function Products() {
       category: "Food Crop",
       price: 2300 + " frs per 20 liters",
       quantity: "7 300kg bags",
-      action: actionFunc("/farmer-11", "/farmer-12", "/farmer-13"),
+      action: actionFunc("/buyer-11", "/buyer-12"),
     },
   ];
   return (
     <div className="products" style={{ textAlign: "left" }}>
       <Dashboard title="Products">
-        <div className="flex flex-wrap items-center">
           <h1 className="heading-1">Products</h1>
-          <div className="ml-auto pb-3">
-            <Link
-              to="/farmer-products/create"
-              className="primary-button flex w-fit  mt-auto"
-            >
-              <PlusOutlined className="pr-2 !font-extrabold" /> Add Product
-            </Link>
-          </div>
-        </div>
-        <DisplayProducts data={data}/>
+        <DisplayProducts data={data} />
       </Dashboard>
     </div>
   );

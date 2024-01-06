@@ -9,9 +9,13 @@
   --secondary: #0c0c0c;
   --secondary-light: #414141;
   --secondary-xlight: #a3a3a3;
+  --secondary-2xlight: #c5c5c5;
   --secondary-bold: #000000;
+  --third: #b88d00;
+  --third-bold: #947100;
+  --danger: #920101;
   --light: #e2e2e2;
-  --xlight: #fcfcfc;
+  --xlight: #f8f8f8;
   --white: #ffffff;
 }
 
@@ -99,9 +103,7 @@ h6 {
   font-weight: 600;
 }
 
-.heading-1 {
-  @apply text-xl;
-}
+
 
 .font-inter {
   font-family: Inter-Regular !important;
@@ -117,18 +119,34 @@ h6 {
 }
 
 /*==================== Theming Start ================================*/
+.heading-1 {
+  @apply text-2xl;
+}
+
+.heading-2 {
+  @apply text-xl;
+}
+
 .heading-3 {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
+  @apply text-lg;
 }
 
 .heading-4 {
-  font-size: 1rem;
-  line-height: 1.75rem;
+  @apply text-base
 }
 
 p {
   line-height: 1.5rem;
+}
+
+.text-2xs {
+  font-size: 10.5px;
+  line-height: 0.9rem;
+}
+
+.text-3xs {
+  font-size: 10px;
+  line-height: 0.9rem;
 }
 
 .short-border {
@@ -139,6 +157,11 @@ p {
 a:hover {
   color: initial !important;
 }
+
+.table-div {
+  overflow-x: scroll;
+}
+
 /* .primary-bg { */
 .th-bg-primary-bold {
   background-color: var(--primary-bold);
@@ -152,6 +175,18 @@ a:hover {
   background-color: var(--secondary);
 }
 
+.th-bg-third {
+  background-color: var(--third);
+}
+
+.th-bg-third-bold {
+  background-color: var(--third-bold);
+}
+
+.th-bg-xlight {
+  background-color: var(--xlight);
+}
+
 .th-text-primary {
   color: var(--primary);
 }
@@ -162,6 +197,14 @@ a:hover {
 
 .th-text-secondary {
   color: var(--secondary);
+}
+
+.th-text-third {
+  color: var(--third);
+}
+
+.th-text-third-bold {
+  color: var(--third-bold);
 }
 
 .th-text-white {
@@ -184,36 +227,62 @@ a:hover {
   border-radius: 5px;
 }
 
+
+.third-activeClass {
+  background-color: var(--third-bold);
+  color: var(--white) !important;
+  font-weight: 600;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+.third-activeClass:hover {
+  background-color: #947100d0;
+  color: var(--white) !important;
+  font-weight: 600;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
 .primary-button {
   border: 2px solid var(--primary);
   background-color: var(--primary);
   border-radius: 5px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.1rem;
   padding: 10px 24px !important;
   height: auto !important;
   color: var(--white);
+  display: flex;
+  align-items: center;
+  @apply !text-xs md:!text-sm;
 }
 
 .danger-button {
-  border: 2px solid rgb(211, 0, 0);
-  background-color: rgb(211, 0, 0);
+  border: 2px solid var(--danger);
+  background-color: var(--danger);
   border-radius: 5px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.1rem;
   padding: 10px 24px !important;
   height: auto !important;
   color: var(--white);
+  display: flex;
+  align-items: center;
+  @apply !text-xs md:!text-sm;
 }
 
 .secondary-button {
   border: 2px solid var(--primary);
   border-radius: 5px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.05rem;
   padding: 10px 24px;
   height: auto !important;
   color: var(--primary);
+  display: flex;
+  align-items: center;
+  @apply !text-xs md:!text-sm;
 }
 
 .primary-button:hover,
@@ -224,12 +293,13 @@ a:hover {
   color: var(--primary) !important;
 }
 
+
 .danger-button:hover,
 .danger-button:focus,
 .danger-button:active {
   background-color: var(--white);
-  border: 2px solid rgb(211, 0, 0) !important;
-  color: rgb(211, 0, 0) !important;
+  border: 2px solid var(--danger) !important;
+  color: var(--danger) !important;
 }
 
 .secondary-button:hover,
@@ -248,6 +318,11 @@ a:hover {
   border-radius: 10px;
   background-color: var(--xlight);
   /* margin: auto 0; */
+}
+
+.border-left-bottom-right {
+  border: 0.12rem solid var(--primary);
+  border-top: 0;
 }
 
 /* antd style modifications  */

@@ -19,8 +19,7 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-export default function CreateProduct() {
-  const [harvested, setHarvested] = useState(false);
+export default function EditOrder() {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -37,9 +36,6 @@ export default function CreateProduct() {
     );
   };
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
-  const checkTrue = (e) => {
-    setHarvested(e.target.checked);
-  };
 
   const uploadButton = (
     <div>
@@ -54,14 +50,26 @@ export default function CreateProduct() {
     </div>
   );
 
+  const initialVals = {
+    name: "Cocoyam",
+    category: "Feed Crop",
+    unit: "per 15 kg",
+    price_per_unit: "5000",
+  };
+
+  const onSubmit = (e) => {
+    // e.preventDefault()
+    console.log(e);
+  };
+
   return (
-    <div className="create-product">
-      <Dashboard title="Products / Create">
-        <h1 className="heading-1">Add Product</h1>
+    <div className="edit-order">
+      <Dashboard title="Products / Edit">
+        <h1 className="heading-1">Edit Order</h1>
 
         <div className="w-full">
           <div className="section-box">
-            <Form layout="vertical" initialValues={{ remember: true }}>
+            <Form layout="vertical" onFinish={onSubmit}>
               <Form.Item
                 label="Image"
                 name="image"
@@ -94,10 +102,12 @@ export default function CreateProduct() {
                     },
                   ]}
                   className=""
+                  initialValue={initialVals.name}
                 >
                   <Input
                     placeholder="Enter Product Name ..."
                     className="h-10"
+                    disabled
                   />
                 </Form.Item>
                 <Form.Item
@@ -109,9 +119,11 @@ export default function CreateProduct() {
                     },
                   ]}
                   className=""
+                  initialValue={initialVals.category}
                 >
                   <Select
-                    defaultValue="Select Category ..."
+                    defaultValue={initialVals.category}
+                    disabled
                     options={[
                       { value: "food_crop", label: "Food Crop" },
                       //   { value: "cash_crop", label: "Cash Crop" },
@@ -134,8 +146,10 @@ export default function CreateProduct() {
                     },
                   ]}
                   className=""
+                  initialValue={initialVals.unit}
                 >
                   <Input
+                    disabled
                     placeholder="e.g per 20 litres / per 50kg bag"
                     className="h-10"
                   />
@@ -147,15 +161,16 @@ export default function CreateProduct() {
                   rules={[
                     {
                       required: true,
-                      type: "number",
+                      // type: "number",
                     },
                   ]}
                   className=""
+                  initialValue={initialVals.price_per_unit}
                 >
-                  <Input placeholder="e.g 25,000" className="h-10" />
+                  <Input placeholder="e.g 25,000" className="h-10" disabled />
                 </Form.Item>
 
-                <Form.Item
+                {/* <Form.Item
                   label="Price per Unit Measurement"
                   name="price_per_unit"
                   rules={[
@@ -167,91 +182,77 @@ export default function CreateProduct() {
                   className=""
                 >
                   <Input placeholder="e.g 25,000" className="h-10" />
-                </Form.Item>
+                </Form.Item> */}
               </div>
 
               <div className="pt-5">
-                <div className="pb-2">
-                  <Checkbox onChange={checkTrue}>Products Harvested ?</Checkbox>
-                </div>
-                {harvested && (
-                  <>
-                    <hr />
-                    <br />
-                    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2 lg:gap-6">
-                      <Form.Item
-                        label="Quantity"
-                        name="quantity"
-                        // rules={[
-                        //   {
-                        //     required: true,
-                        //   },
-                        // ]}
-                        className=""
-                      >
-                        <Input
-                          placeholder="e.g 5 - 50kg bags / 4 - 300 kg bags"
-                          className="h-10"
-                        />
-                      </Form.Item>
-                      <Form.Item
-                        label="Date harvested"
-                        name="date_harvested"
-                        // rules={[
-                        //   {
-                        //     required: true,
-                        //   },
-                        // ]}
-                        className=""
-                      >
-                        <DatePicker className="w-full" />
-                      </Form.Item>
+                <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2 lg:gap-6">
+                  <Form.Item
+                    label="Quantity"
+                    name="quantity"
+                    rules={[
+                      {
+                        required: true,
+                      },
+                    ]}
+                    className=""
+                  >
+                    <Input
+                      placeholder="e.g 5 - 50kg bags / 4 - 300 kg bags"
+                      className="h-10"
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="Latest Date Needed"
+                    name="latest_date_needed"
+                    rules={[
+                      {
+                        required: true,
+                      },
+                    ]}
+                    className=""
+                  >
+                    <DatePicker className="w-full" />
+                  </Form.Item>
 
-                      <Form.Item
-                        label="Other Product Images"
-                        name="other_product_images"
-                        // rules={[
-                        //   {
-                        //     required: true,
-                        //   },
-                        // ]}
-                        className=""
-                      >
-                        <Upload
-                          //   action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                          listType="picture-card"
-                          fileList={fileList}
-                          maxCount={10}
-                          onPreview={handlePreview}
-                          onChange={handleChange}
-                        >
-                          {fileList.length >= 8 ? null : uploadButton}
-                        </Upload>
-                        <Modal
-                          open={previewOpen}
-                          title={previewTitle}
-                          footer={null}
-                          onCancel={handleCancel}
-                        >
-                          <img
-                            alt="example"
-                            style={{
-                              width: "100%",
-                            }}
-                            src={previewImage}
-                          />
-                        </Modal>
-                      </Form.Item>
-                     
-                    </div>
-                  </>
-                )}
-                <br /><br />
-                 <Button
-              to="/farmer-products/create"
-              className="primary-button flex w-fit  mt-auto"
-            >Save Product</Button>
+                  {/* <Form.Item
+                    label="Other Product Images"
+                    name="other_product_images"
+                    // rules={[
+                    //   {
+                    //     required: true,
+                    //   },
+                    // ]}
+                    className=""
+                  >
+                    <Upload
+                      //   action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                      listType="picture-card"
+                      fileList={fileList}
+                      maxCount={10}
+                      onPreview={handlePreview}
+                      onChange={handleChange}
+                    >
+                      {fileList.length >= 8 ? null : uploadButton}
+                    </Upload>
+                    <Modal
+                      open={previewOpen}
+                      title={previewTitle}
+                      footer={null}
+                      onCancel={handleCancel}
+                    >
+                      <img
+                        alt="example"
+                        style={{
+                          width: "100%",
+                        }}
+                        src={previewImage}
+                      />
+                    </Modal>
+                  </Form.Item> */}
+                </div>
               </div>
+              <button type="submit">Submit</button>
             </Form>
           </div>
         </div>

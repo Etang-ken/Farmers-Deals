@@ -1,0 +1,19 @@
+.buyer-settings-left {
+    height: auto;
+    width: 100%;
+    padding: 20px;
+    border: 0.12rem solid var(--third-bold);
+    border-right: 0;
+    border-radius: 10px;
+    /* margin: auto 0; */
+}
+
+.buyer-settings-right {
+    height: fit-content !important;
+    width: 100%;
+    padding: 20px;
+    border: 0.12rem solid var(--third-bold);
+    border-left: 0;
+    border-radius: 10px;
+    /* margin: auto 0; */
+}

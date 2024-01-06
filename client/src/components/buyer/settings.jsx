@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Button, Form, Input, InputNumber, Select } from "antd";
 import Dashboard from "./layouts/dashboard";
 import ShortBottomLine from "../common/short_bottom_line";
-import "../styles/farmer/settings.css";
+import "../styles/buyer/settings.css";
 
 export default function Settings() {
   return (
@@ -13,7 +13,7 @@ export default function Settings() {
         <h1 className="heading-1">Settings</h1>
         <div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="farmer-settings-left bg-slate-50">
+            <div className="buyer-settings-left bg-slate-50">
               <div className="mb-5">
                 <h3 className="heading-4 w-fit !mb-1">Update Settings</h3>
                 <ShortBottomLine />
@@ -179,7 +179,7 @@ export default function Settings() {
             </div>
 
             {/* right  */}
-            <div className="farmer-settings-right bg-slate-50">
+            <div className="buyer-settings-right bg-slate-50">
               <div className="mb-5">
                 <h3 className="heading-4 w-fit !mb-1">Change Password</h3>
                 <ShortBottomLine />

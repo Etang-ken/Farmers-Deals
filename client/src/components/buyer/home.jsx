@@ -9,27 +9,25 @@ import {
   EditOutlined,
   DeleteOutlined,
   EllipsisOutlined,
+  ShoppingCartOutlined
 } from "@ant-design/icons";
 import Dashboard from "./layouts/dashboard";
 import DisplayProducts from "./fragments/display_products";
-import "../styles/farmer/home.css";
-import image from "../styles/farmer/image.jpg";
-import image2 from "../styles/farmer/coffe3.jpg";
-import image3 from "../styles/farmer/cocoa2.jpg";
+import "../styles/buyer/home.css";
+import image from "../styles/buyer/image.jpg";
+import image2 from "../styles/buyer/coffe3.jpg";
+import image3 from "../styles/buyer/cocoa2.jpg";
 import ShortBottomLine from "../common/short_bottom_line";
 
 export default function Home() {
-  const actionFunc = (viewUrl, editUrl, deleteUrl) => {
+  const actionFunc = (viewUrl, orderUrl) => {
     return (
       <div className="flex gap-3">
         <Link to={viewUrl} className="flex items-center">
-          <EyeOutlined className="text-green-600 font-extrabold text-lg" />
+          <EyeOutlined className="text-green-600 font-extrabold text-xl" />
         </Link>
-        <Link to={editUrl} className="flex items-center text-lg">
-          <EditOutlined className="text-blue-600 font-extrabold" />
-        </Link>
-        <Link to={deleteUrl} className="flex items-center" danger>
-          <DeleteOutlined className="text-red-500 font-extrabold text-lg" />
+        <Link to={orderUrl} className="flex items-center text-xl">
+          <ShoppingCartOutlined className="th-text-third font-extrabold" />
         </Link>
       </div>
     );
@@ -43,9 +41,8 @@ export default function Home() {
       price: 5500 + " frs per 20 liters",
       quantity: "9 300kg bags",
       action: actionFunc(
-        "/farmer-products/6/show",
-        "/farmer-products/6/edit",
-        "/farmer-3"
+        "/buyer-products/6/show",
+        "/buyer-orders/create"
       ),
     },
     {
@@ -55,7 +52,7 @@ export default function Home() {
       category: "Food Crop",
       price: 4500 + " frs per 20 liters",
       quantity: "10 300kg bags",
-      action: actionFunc("/farmer-4", "/farmer-5", "/farmer-6"),
+      action: actionFunc("/buyer-4", "/buyer-5"),
     },
     {
       key: "3",
@@ -64,7 +61,7 @@ export default function Home() {
       category: "Cash Crop",
       price: 7000 + " frs per 20 liters",
       quantity: "5 300kg bags",
-      action: actionFunc("/farmer-7", "/farmer-8", "/farmer-9"),
+      action: actionFunc("/buyer-7", "/buyer-8"),
     },
     {
       key: "4",
@@ -73,7 +70,7 @@ export default function Home() {
       category: "Food Crop",
       price: 2300 + " frs per 20 liters",
       quantity: "7 300kg bags",
-      action: actionFunc("/farmer-11", "/farmer-12", "/farmer-13"),
+      action: actionFunc("/buyer-11", "/buyer-12"),
     },
   ];
 
@@ -84,7 +81,7 @@ export default function Home() {
           <img src={image} width="40px" className="!h-10 rounded-full" />
           <span className="pl-1">
             <p className="text-xs mb-1">
-              <span className="font-semibold">{name}</span> just ordered{" "}
+              <span className="font-semibold">{name}</span> accepted your ordered for{" "}
               <span className="font-semibold">
                 {quantity} {product}
               </span>
@@ -96,7 +93,7 @@ export default function Home() {
               </span>
             </span>
           </span>
-          <Link to={`/farmer-orders/${id}/show`} className="ml-auto">
+          <Link to={`/buyer-orders/${id}/show`} className="ml-auto">
             <EyeOutlined className="text-lg th-text-primary" />
           </Link>
         </div>
@@ -112,10 +109,10 @@ export default function Home() {
           <div className="dashbox">
             <div>
               <h1 className="text-5xl my-1 th-text-primary-bold">00</h1>
-              <p className="text-xs font-semibold uppercase">Total Products</p>
+              <p className="text-xs font-semibold uppercase">Total Orders</p>
             </div>
             <div className="ml-auto">
-              <ShopOutlined className="text-5xl th-text-third" />
+              <ShoppingCartOutlined className="text-5xl th-text-third" />
             </div>
           </div>
 
@@ -143,7 +140,7 @@ export default function Home() {
             <div>
               <h1 className="text-5xl my-1 th-text-primary-bold">00</h1>
               <p className="text-xs font-semibold uppercase">
-                Years of Farming Experience
+                Years of Buying Experience
               </p>
             </div>
             <div className="ml-auto">
@@ -155,13 +152,13 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-6 mt-16 gap-4">
           <div className="col-span-4 border border-t-0 border-slate-100 rounded">
             <div className="w-full">
-              <h3 className="heading-4 mb-1">My Products</h3>
+              <h3 className="heading-4 mb-1">Products</h3>
               <ShortBottomLine />
               <br />
               <DisplayProducts data={data} showPagination={false} />
               <br />
               <Link
-                to="/farmer-products"
+                to="/buyer-products"
                 className="th-text-primary text-md font-bold ml-2 flex items-start text-lg"
               >
                 More Products{" "}
@@ -171,7 +168,7 @@ export default function Home() {
           </div>
 
           <div className="orders col-span-2 h-full th-bg-xlight p-2 md:mt-10 lg:mt-0">
-            <h3 className="heading-4 mb-1">Latest Orders</h3>
+            <h3 className="heading-4 mb-1">Order Notifications</h3>
             <ShortBottomLine />
             <br />
             {order(

@@ -2,17 +2,20 @@ import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Table, Button, Input, Space } from "antd";
 import {
+  DeleteOutlined,
+  EditOutlined,
   SearchOutlined,
-  CheckCircleFilled,
+  EyeOutlined,
   CloseCircleFilled,
-  ExclamationCircleFilled,
+  MailOutlined,
+  PhoneOutlined
 } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
-import Dashboard from "./layouts/dashboard";
-import "../styles/farmer/deals.css";
-import image from "../styles/farmer/image.jpg";
+import Dashboard from "../layouts/dashboard";
+import "../../styles/farmer/orders.css";
+import image from "../../styles/farmer/image.jpg";
 
-export default function Deals() {
+export default function Orders() {
   // const columns = [
   //   {
   //     title: 'Name',
@@ -199,14 +202,6 @@ export default function Deals() {
   });
   const columns = [
     {
-      title: "Buyer",
-      dataIndex: "buyer",
-      key: "buyer",
-      // width: "30%",
-      ...getColumnSearchProps("buyer"),
-      sorter: (a, b) => a.buyer.length - b.buyer.length,
-    },
-    {
       title: "Product Image",
       dataIndex: "product_image",
       key: "product_image",
@@ -220,22 +215,30 @@ export default function Deals() {
       sorter: (a, b) => a.product_name.length - b.product_name.length,
     },
     {
-      title: "Product Category",
-      dataIndex: "product_category",
-      key: "product_category",
+      title: "Buyer's Name",
+      dataIndex: "buyer_name",
+      key: "buyer_name",
       // width: "20%",
-      ...getColumnSearchProps("product_category"),
-      sorter: (a, b) => a.product_category.length - b.product_category.length,
+      ...getColumnSearchProps("buyer_name"),
+      sorter: (a, b) => a.buyer_name.length - b.buyer_name.length,
     },
     {
-      title: "Price per Item",
-      dataIndex: "price",
-      key: "price",
+      title: "Buyer's Location",
+      dataIndex: "buyer_location",
+      key: "buyer_location",
       // width: "20%",
-      ...getColumnSearchProps("price"),
+      ...getColumnSearchProps("buyer_location"),
+      sorter: (a, b) => a.buyer_location.length - b.buyer_location.length,
     },
     {
-      title: "Quantity",
+      title: "Latest Date Needed",
+      dataIndex: "latest_date_needed",
+      key: "latest_date_needed",
+      // width: "20%",
+      ...getColumnSearchProps("latest_date_needed"),
+    },
+    {
+      title: "Quantity Needed",
       dataIndex: "quantity",
       key: "quantity",
       ...getColumnSearchProps("quantity"),
@@ -243,129 +246,91 @@ export default function Deals() {
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Total Price",
-      dataIndex: "total_price",
-      key: "total_price",
-    },
-    {
-      title: "Order Date",
-      dataIndex: "order_date",
-      key: "order_date",
-    },
-    {
-      title: "Done / Cancelled Deal Date",
-      dataIndex: "done_deal_date",
-      key: "done_deal_date",
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
+      title: "Action",
+      dataIndex: "action",
     },
   ];
   // const data = [];
   // for (let i = 0; i < 46; i++) {
   //   data.push({
   //     key: i,
-  //     name: `Edward King ${i}`,
+  //     product_name: `Edward King ${i}`,
   //     age: 32,
   //     address: `London, Park Lane no. ${i}`,
   //   });
   // }
+  const actionFunc = (viewUrl, cancelUrl, phoneUrl, emailUrl) => {
+    return (
+        <div className="flex gap-3">
+          <Link to={viewUrl} className="flex items-center">
+            <EyeOutlined className="text-green-600 text-lg" />
+          </Link>
+
+          <Link to={cancelUrl} className="flex items-center" danger>
+            <CloseCircleFilled className="text-red-500 font-extrabold text-lg" />
+          </Link>
+          <span className="text-3xl th-text-primary font-semibold">|</span>
+          <Link to={"tel:" + phoneUrl} className="flex items-center">
+            <PhoneOutlined className="text-blue-600 text-lg" />
+          </Link>
+
+          <Link to={"mailto:" + emailUrl} className="flex items-center" danger>
+            <MailOutlined className="text-gray-500 font-extrabold text-lg" />
+          </Link>
+        </div>
+      )
+  }
   const data = [
     {
       key: "1",
-      buyer: "Etang Kencliff",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Irish Potato",
-      product_category: "Cash Crop",
-      price: 5500 + " frs per 20 liters",
-      quantity: "4 300kg bags",
-      total_price: 5500 * 4 + " frs",
-      order_date: "30-Jan-2023",
-      done_deal_date: "03-Feb-2023",
-      status: (
-        <div className="flex gap-2 items-center">
-          <CheckCircleFilled className="text-green-600" />
-          Done
-        </div>
-      ),
+      buyer_name: "John Doe",
+      buyer_location: "Douala",
+      latest_date_needed: "05-06-2023",
+      quantity: "3 300kg bags",
+      action: actionFunc("/farmer-orders/100fdsjkuish/show", "/farmer-products", "670260611", "etang@gmail.com"),
     },
     {
       key: "2",
-      buyer: "John Doe",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Cocoyam",
-      product_category: "Food Crop",
-      price: 4500 + " frs per 20 liters",
+      buyer_name: "Mary Doe",
+      buyer_location: "Buea",
+      latest_date_needed: "09-05-2023",
       quantity: "2 300kg bags",
-      total_price: 4500 * 2 + " frs",
-      order_date: "28-Apr-2023",
-      done_deal_date: "-",
-      status: (
-        <div className="flex gap-2 items-center">
-          <ExclamationCircleFilled className="text-yellow-500" />
-          Pending
-        </div>
-      ),
+      action: actionFunc("/farmer-products", "/farmer-products", "673928703", "ken@gmail.com"),
     },
     {
       key: "3",
-      buyer: "Emilie Church",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Tomato",
-      product_category: "Cash Crop",
-      price: 7000 + " frs per 20 liters",
-      quantity: "1 300kg bags",
-      total_price: 7000 * 1 + " frs",
-      order_date: "30-April-2023",
-      done_deal_date: "-",
-      status: (
-        <div className="flex gap-2 items-center">
-          <ExclamationCircleFilled className="text-yellow-500" />
-          Pending
-        </div>
-      ),
+      buyer_name: "Tyler Lockwood",
+      buyer_location: "Kribi",
+      latest_date_needed: "12-06-2023",
+      quantity: "2 300kg bags",
+      action: actionFunc("/farmer-products", "/farmer-products", "652547170", "cliff@gmail.com"),
     },
     {
       key: "4",
-      buyer: "Lila Cruz",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Egusi",
-      product_category: "Food Crop",
-      price: 2300 + " frs per 20 liters",
-      quantity: "3 300kg bags",
-      total_price: 2300 * 3 + " frs",
-      order_date: "22-Mar-2023",
-      done_deal_date: "29-Mar-2023",
-      status: (
-        <div className="flex gap-2 items-center">
-          <CloseCircleFilled className="text-red-600" />
-          Cancelled
-        </div>
-      ),
+      buyer_name: "Prince Nico",
+      buyer_location: "Yaounde",
+      latest_date_needed: "22-05-2023",
+      quantity: "2 50kg bags",
+      action: actionFunc("/farmer-products", "/farmer-products", "670577192", "veruska@gmail.com"),
     },
   ];
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
   };
   return (
-    <div className="deals" style={{ textAlign: "left" }}>
-      <Dashboard title="Deals">
-        <div className="flex w-full">
-          <h1 className="heading-1">Deals</h1>
-          {/* <div className="ml-auto">
-            <Link to="/farmer-deal-requests" className="secondary-button">
-              View Deal Requests
-            </Link>
-          </div> */}
-        </div>
+    <div className="orders" style={{ textAlign: "left" }}>
+      <Dashboard title="Orders">
+        <h1 className="heading-1">Orders</h1>
         <div className="table-div">
-          <Table
-            columns={columns}
-            dataSource={data}
-            pagination={3}
-            id="deals-table"
-          />
+          <Table columns={columns} dataSource={data} id="orders-table" />
         </div>
       </Dashboard>
     </div>

@@ -1,10 +1,10 @@
 import React from "react";
 import { Image } from "antd";
 import Dashboard from "../layouts/dashboard";
-import image from "../../styles/farmer/image.jpg";
-import image2 from "../../styles/farmer/cocoa1.jpg";
-import image3 from "../../styles/farmer/cocoa2.jpg";
-import image4 from "../../styles/farmer/coffe3.jpg";
+import image from "../../styles/buyer/image.jpg";
+import image2 from "../../styles/buyer/cocoa1.jpg";
+import image3 from "../../styles/buyer/cocoa2.jpg";
+import image4 from "../../styles/buyer/coffe3.jpg";
 import { Link, useParams } from "react-router-dom";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ShortBottomLine from "../../common/short_bottom_line";
@@ -39,7 +39,7 @@ export default function ShowProduct() {
 
           <div className="details">
             <h1 className="text-2xl font-inter">$ 20.00</h1>
-            <h1 className="text-4xl font-inter mb-1 th-text-primary">
+            <h1 className="text-4xl font-inter mb-1 th-text-third">
               Cocoyam
             </h1>
             <p className="text-xs uppercase my-0">Cash Crop</p>
@@ -53,13 +53,13 @@ export default function ShowProduct() {
 
             <div className="flex flex-wrap gap-10 mt-10">
               <Link
-                to="/farmer-products/9/edit"
+                to="/buyer-orders/create"
                 className="primary-button flex w-fit mt-auto"
               >
                 <EditOutlined className="pr-2" /> Edit
               </Link>
               <Link
-                to="/farmer-products"
+                to="/buyer-products"
                 className="danger-button flex w-fit  mt-auto"
               >
                 <DeleteOutlined className="pr-2" /> Delete
@@ -82,7 +82,7 @@ export default function ShowProduct() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-6 px-2 bg-slate-50 !justify-items-center text-center">
             <div className="p-3 rounded-lg shadow-xl w-fit !h-fit">
-              <Link to="/farmer-products">
+              <Link to="/buyer-products">
                 <img
                   className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
                   src={image}
@@ -92,7 +92,7 @@ export default function ShowProduct() {
             </div>
 
             <div className="p-3 rounded-lg shadow-xl w-fit !h-fit">
-              <Link to="/farmer-products">
+              <Link to="/buyer-products">
                 <img
                   className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
                   src={image2}
@@ -102,7 +102,7 @@ export default function ShowProduct() {
             </div>
 
             <div className="p-3 rounded-lg shadow-xl w-fit !h-fit">
-              <Link to="/farmer-products">
+              <Link to="/buyer-products">
                 <img
                   className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
                   src={image3}
@@ -112,7 +112,7 @@ export default function ShowProduct() {
             </div>
 
             <div className="p-3 rounded-lg shadow-xl w-fit !h-fit">
-              <Link to="/farmer-products">
+              <Link to="/buyer-products">
                 <img
                   className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
                   src={image4}

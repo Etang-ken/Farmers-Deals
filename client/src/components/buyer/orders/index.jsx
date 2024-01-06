@@ -5,15 +5,17 @@ import {
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
-  EyeOutlined,
+  // EyeOutlined,
   CloseCircleFilled,
   MailOutlined,
-  PhoneOutlined
+  PhoneOutlined,
+  PlusOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
-import Dashboard from "./layouts/dashboard";
-import "./styles/orders.css";
-import image from "./styles/image.jpg";
+import Dashboard from "../layouts/dashboard";
+import "../../styles/buyer/orders.css";
+import image from "../../styles/buyer/image.jpg";
 
 export default function Orders() {
   // const columns = [
@@ -215,20 +217,20 @@ export default function Orders() {
       sorter: (a, b) => a.product_name.length - b.product_name.length,
     },
     {
-      title: "Buyer's Name",
-      dataIndex: "buyer_name",
-      key: "buyer_name",
+      title: "Farmer's Name",
+      dataIndex: "farmer_name",
+      key: "farmer_name",
       // width: "20%",
-      ...getColumnSearchProps("buyer_name"),
-      sorter: (a, b) => a.buyer_name.length - b.buyer_name.length,
+      ...getColumnSearchProps("farmer_name"),
+      sorter: (a, b) => a.farmer_name.length - b.farmer_name.length,
     },
     {
-      title: "Buyer's Location",
-      dataIndex: "buyer_location",
-      key: "buyer_location",
+      title: "Farmer's Location",
+      dataIndex: "farmer_location",
+      key: "farmer_location",
       // width: "20%",
-      ...getColumnSearchProps("buyer_location"),
-      sorter: (a, b) => a.buyer_location.length - b.buyer_location.length,
+      ...getColumnSearchProps("farmer_location"),
+      sorter: (a, b) => a.farmer_location.length - b.farmer_location.length,
     },
     {
       title: "Latest Date Needed",
@@ -259,67 +261,95 @@ export default function Orders() {
   //     address: `London, Park Lane no. ${i}`,
   //   });
   // }
-  const actionFunc = (viewUrl, cancelUrl, phoneUrl, emailUrl) => {
+  const actionFunc = (viewUrl, editUrl, cancelUrl, phoneUrl, emailUrl) => {
     return (
-        <div className="flex gap-3">
-          <Link to={viewUrl} className="flex items-center">
-            <EyeOutlined className="text-green-600 text-lg" />
-          </Link>
+      <div className="flex gap-3">
+        <Link to={viewUrl} className="flex items-center">
+          <EyeOutlined className="text-green-600 text-lg" />
+        </Link>
 
-          <Link to={cancelUrl} className="flex items-center" danger>
-            <CloseCircleFilled className="text-red-500 font-extrabold text-lg" />
-          </Link>
-          <span className="text-3xl th-text-primary font-semibold">|</span>
-          <Link to={"tel:" + phoneUrl} className="flex items-center">
-            <PhoneOutlined className="text-blue-600 text-lg" />
-          </Link>
+        <Link to={editUrl} className="flex items-center">
+          <EditOutlined className="text-blue-600 text-lg" />
+        </Link>
 
-          <Link to={"mailto:" + emailUrl} className="flex items-center" danger>
-            <MailOutlined className="text-gray-500 font-extrabold text-lg" />
-          </Link>
-        </div>
-      )
-  }
+        <Link to={cancelUrl} className="flex items-center" danger>
+          <CloseCircleFilled className="text-red-500 font-extrabold text-lg" />
+        </Link>
+        <span className="text-3xl th-text-primary font-semibold">|</span>
+        <Link to={"tel:" + phoneUrl} className="flex items-center">
+          <PhoneOutlined className="text-green-600 text-lg" />
+        </Link>
+
+        <Link to={"mailto:" + emailUrl} className="flex items-center" danger>
+          <MailOutlined className="text-gray-500 font-extrabold text-lg" />
+        </Link>
+      </div>
+    );
+  };
   const data = [
     {
       key: "1",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Irish Potato",
-      buyer_name: "John Doe",
-      buyer_location: "Douala",
+      farmer_name: "John Doe",
+      farmer_location: "Douala",
       latest_date_needed: "05-06-2023",
       quantity: "3 300kg bags",
-      action: actionFunc("/farmer-products", "/farmer-products", "670260611", "etang@gmail.com"),
+      action: actionFunc(
+        "/buyer-orders/100fdsjkuish/show",
+        "/buyer-orders/100fdsjkuish/edit",
+        "/buyer-products",
+        "670260611",
+        "etang@gmail.com"
+      ),
     },
     {
       key: "2",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Cocoyam",
-      buyer_name: "Mary Doe",
-      buyer_location: "Buea",
+      farmer_name: "Mary Doe",
+      farmer_location: "Buea",
       latest_date_needed: "09-05-2023",
       quantity: "2 300kg bags",
-      action: actionFunc("/farmer-products", "/farmer-products", "673928703", "ken@gmail.com"),
+      action: actionFunc(
+        "/buyer-products",
+        "/buyer-orders/100fdsjkuish/edit",
+        "/buyer-products",
+        "673928703",
+        "ken@gmail.com"
+      ),
     },
     {
       key: "3",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Tomato",
-      buyer_name: "Tyler Lockwood",
-      buyer_location: "Kribi",
+      farmer_name: "Tyler Lockwood",
+      farmer_location: "Kribi",
       latest_date_needed: "12-06-2023",
       quantity: "2 300kg bags",
-      action: actionFunc("/farmer-products", "/farmer-products", "652547170", "cliff@gmail.com"),
+      action: actionFunc(
+        "/buyer-products",
+        "/buyer-orders/100fdsjkuish/edit",
+        "/buyer-products",
+        "652547170",
+        "cliff@gmail.com"
+      ),
     },
     {
       key: "4",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Egusi",
-      buyer_name: "Prince Nico",
-      buyer_location: "Yaounde",
+      farmer_name: "Prince Nico",
+      farmer_location: "Yaounde",
       latest_date_needed: "22-05-2023",
       quantity: "2 50kg bags",
-      action: actionFunc("/farmer-products", "/farmer-products", "670577192", "veruska@gmail.com"),
+      action: actionFunc(
+        "/buyer-products",
+        "/buyer-orders/100fdsjkuish/edit",
+        "/buyer-products",
+        "670577192",
+        "veruska@gmail.com"
+      ),
     },
   ];
   const onChange = (pagination, filters, sorter, extra) => {
@@ -328,7 +358,17 @@ export default function Orders() {
   return (
     <div className="orders" style={{ textAlign: "left" }}>
       <Dashboard title="Orders">
-        <h1 className="text-xl">Orders</h1>
+        <div className="flex flex-wrap items-center">
+          <h1 className="heading-1">Orders</h1>
+          <div className="ml-auto pb-3">
+            <Link
+              to="/buyer-products"
+              className="primary-button flex w-fit  mt-auto"
+            >
+              <PlusOutlined className="pr-2 !font-extrabold" /> Add Order
+            </Link>
+          </div>
+        </div>
         <div className="table-div">
           <Table columns={columns} dataSource={data} id="orders-table" />
         </div>

@@ -1,20 +1,32 @@
-const express = require("express");
+const express = require('express');
+const connectToDb = require('./db/conn')
 const app = express();
-const cors = require("cors");
-require("dotenv").config({ path: "./config.env" });
-const port = process.env.PORT || 5000;
+const bodyParser = require('body-parser');
+const port = 5000; // Choose any available port
+const farmerRoutes = require('./routes/parents-routes')
 
-app.use(cors());
-app.use(express.json());
-app.use(require("./routes/record"));
+app.use(bodyParser.json());
+app.get('/', (req, res) => {
+  res.send('Hello, welcome to your Node.js server!');
+});
 
-const dbo = require("./db/conn");
+// app.listen(port, () => {
+//   console.log(`Server running on http://localhost:${port}`);
+// });
 
-app.listen(port. () => {
-    dbo.connectToServer(function (err) {
-        if (err) {
-            console.error(err)
-        }
+// connectToDb
+
+// app.use('/farmer', farmerRoutes)
+connectToDb()
+  .then(() => {
+    console.log('Database connected');
+    app.listen(port, () => {
+      console.log(`Server running on http://localhost:${port}`);
     });
-    console.log(`Server is running on port: ${port}`)
-})
+
+    // Use routes after the database connection is established
+    app.use('/farmer', farmerRoutes);
+  })
+  .catch((error) => {
+    console.error('Error connecting to the database:', error);
+  });

@@ -1,0 +1,20 @@
+.buyer-profile-head {
+    height: auto;
+    width: 100%;
+    padding: 20px;
+    border: 3px solid var(--third-bold);
+    border-right: 0;
+    border-top: 0;
+    border-radius: 10px;
+    /* margin: auto 0; */
+}
+
+.buyer-profile-body {
+    height: auto;
+    width: 100%;
+    padding: 20px;
+    border: 0.12rem solid var(--third-bold);
+    border-right: 0;
+    border-radius: 10px;
+    /* margin: auto 0; */
+}

@@ -9,80 +9,10 @@ import {
 } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import Dashboard from "./layouts/dashboard";
-import "../styles/farmer/deals.css";
-import image from "../styles/farmer/image.jpg";
+import "../styles/buyer/deals.css";
+import image from "../styles/buyer/image.jpg";
 
 export default function Deals() {
-  // const columns = [
-  //   {
-  //     title: 'Name',
-  //     dataIndex: 'name',
-  //     filters: [
-  //       {
-  //         text: 'Joe',
-  //         value: 'Joe',
-  //       },
-  //       {
-  //         text: 'Category 1',
-  //         value: 'Category 1',
-  //         children: [
-  //           {
-  //             text: 'Yellow',
-  //             value: 'Yellow',
-  //           },
-  //           {
-  //             text: 'Pink',
-  //             value: 'Pink',
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         text: 'Category 2',
-  //         value: 'Category 2',
-  //         children: [
-  //           {
-  //             text: 'Green',
-  //             value: 'Green',
-  //           },
-  //           {
-  //             text: 'Black',
-  //             value: 'Black',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //     filterMode: 'tree',
-  //     filterSearch: true,
-  //     onFilter: (value, record) => record.name.includes(value),
-  //     width: '30%',
-  //   },
-  //   {
-  //     title: 'Age',
-  //     dataIndex: 'age',
-  //     sorter: (a, b) => a.age - b.age,
-  //   },
-  //   {
-  //     title: 'Address',
-  //     dataIndex: 'address',
-  //     filters: [
-  //       {
-  //         text: 'London',
-  //         value: 'London',
-  //       },
-  //       {
-  //         text: 'New York',
-  //         value: 'New York',
-  //       },
-  //     ],
-  //     onFilter: (value, record) => record.address.startsWith(value),
-  //     filterSearch: true,
-  //     width: '40%',
-  //   },
-  //   {
-  //     title: 'Action',
-  //     dataIndex: 'action'
-  //   },
-  // ];
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
@@ -199,12 +129,12 @@ export default function Deals() {
   });
   const columns = [
     {
-      title: "Buyer",
-      dataIndex: "buyer",
-      key: "buyer",
+      title: "Farmer",
+      dataIndex: "farmer",
+      key: "farmer",
       // width: "30%",
-      ...getColumnSearchProps("buyer"),
-      sorter: (a, b) => a.buyer.length - b.buyer.length,
+      ...getColumnSearchProps("location"),
+      sorter: (a, b) => a.location.length - b.location.length,
     },
     {
       title: "Product Image",
@@ -226,6 +156,14 @@ export default function Deals() {
       // width: "20%",
       ...getColumnSearchProps("product_category"),
       sorter: (a, b) => a.product_category.length - b.product_category.length,
+    },
+    {
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+      // width: "30%",
+      ...getColumnSearchProps("location"),
+      sorter: (a, b) => a.location.length - b.location.length,
     },
     {
       title: "Price per Item",
@@ -274,10 +212,11 @@ export default function Deals() {
   const data = [
     {
       key: "1",
-      buyer: "Etang Kencliff",
+      farmer: "Etang Kencliff",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Irish Potato",
       product_category: "Cash Crop",
+      location: "Buea, Cameroon",
       price: 5500 + " frs per 20 liters",
       quantity: "4 300kg bags",
       total_price: 5500 * 4 + " frs",
@@ -292,10 +231,11 @@ export default function Deals() {
     },
     {
       key: "2",
-      buyer: "John Doe",
+      farmer: "John Doe",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Cocoyam",
       product_category: "Food Crop",
+      location: "Buea, Cameroon",
       price: 4500 + " frs per 20 liters",
       quantity: "2 300kg bags",
       total_price: 4500 * 2 + " frs",
@@ -310,10 +250,11 @@ export default function Deals() {
     },
     {
       key: "3",
-      buyer: "Emilie Church",
+      farmer: "Emilie Church",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Tomato",
       product_category: "Cash Crop",
+      location: "Buea, Cameroon",
       price: 7000 + " frs per 20 liters",
       quantity: "1 300kg bags",
       total_price: 7000 * 1 + " frs",
@@ -328,10 +269,11 @@ export default function Deals() {
     },
     {
       key: "4",
-      buyer: "Lila Cruz",
+      farmer: "Lila Cruz",
       product_image: <img src={image} height="50" width="50" />,
       product_name: "Egusi",
       product_category: "Food Crop",
+      location: "Buea, Cameroon",
       price: 2300 + " frs per 20 liters",
       quantity: "3 300kg bags",
       total_price: 2300 * 3 + " frs",
@@ -354,7 +296,7 @@ export default function Deals() {
         <div className="flex w-full">
           <h1 className="heading-1">Deals</h1>
           {/* <div className="ml-auto">
-            <Link to="/farmer-deal-requests" className="secondary-button">
+            <Link to="/buyer-deal-requests" className="secondary-button">
               View Deal Requests
             </Link>
           </div> */}
