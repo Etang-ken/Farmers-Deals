@@ -393,3 +393,12 @@ a:hover {
     transform: rotate(360deg);
   }
 }
+
+
+.register :where(.css-dev-only-do-not-override-htwhyh).ant-form-item, .login :where(.css-dev-only-do-not-override-htwhyh).ant-form-item {
+  margin-bottom: 0px;
+}
+
+.ant-form-item-explain-error {
+  font-size: 11px;
+}

@@ -5,12 +5,11 @@ import image from "../../styles/farmer/image.jpg";
 import image2 from "../../styles/farmer/cocoa1.jpg";
 import image3 from "../../styles/farmer/cocoa2.jpg";
 import image4 from "../../styles/farmer/coffe3.jpg";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ShortBottomLine from "../../common/short_bottom_line";
 
 export default function ShowProduct() {
-  const params = useParams();
   return (
     <div className="show-product">
       <Dashboard title="Products / Coco">
@@ -19,20 +18,20 @@ export default function ShowProduct() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div>
             <div className="p-3 rounded-lg shadow-xl w-fit">
-              <Image className="!h-72 !w-96" src={image} />
+              <Image className="!h-72 !w-96" src={image} alt='' />
             </div>
             <div className="flex flex-wrap p-3 h-fit">
               <div className="p-3 rounded-lg shadow-xl">
-                <Image className="!h-20 !w-20" src={image} />
+                <Image className="!h-20 !w-20" src={image} alt='' />
               </div>
               <div className="p-3 rounded-lg shadow-xl">
-                <Image className="!h-20 !w-20" src={image2} />
+                <Image className="!h-20 !w-20" src={image2} alt='' />
               </div>
               <div className="p-3 rounded-lg shadow-xl">
-                <Image className="!h-20 !w-20" src={image3} />
+                <Image className="!h-20 !w-20" src={image3} alt='' />
               </div>
               <div className="p-3 rounded-lg shadow-xl">
-                <Image className="!h-20 !w-20" src={image4} />
+                <Image className="!h-20 !w-20" src={image4} alt='' />
               </div>
             </div>
           </div>
@@ -85,7 +84,7 @@ export default function ShowProduct() {
               <Link to="/farmer-products">
                 <img
                   className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
-                  src={image}
+                  src={image} alt=''
                 />
               </Link>
               <h3 className="pt-3">Image 1</h3>
@@ -95,7 +94,7 @@ export default function ShowProduct() {
               <Link to="/farmer-products">
                 <img
                   className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
-                  src={image2}
+                  src={image2} alt=''
                 />
               </Link>
               <h3 className="pt-3">Image 2</h3>
@@ -105,7 +104,7 @@ export default function ShowProduct() {
               <Link to="/farmer-products">
                 <img
                   className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
-                  src={image3}
+                  src={image3} alt=''
                 />
               </Link>
               <h3 className="pt-3">Image 3</h3>
@@ -115,7 +114,7 @@ export default function ShowProduct() {
               <Link to="/farmer-products">
                 <img
                   className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
-                  src={image4}
+                  src={image4} alt=''
                 />
               </Link>
               <h3 className="pt-3">Image 5</h3>

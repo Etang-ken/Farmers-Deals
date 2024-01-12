@@ -2,8 +2,6 @@ import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Table, Button, Input, Space } from "antd";
 import {
-  DeleteOutlined,
-  EditOutlined,
   SearchOutlined,
   EyeOutlined,
   CloseCircleFilled,
@@ -283,7 +281,7 @@ export default function Orders() {
   const data = [
     {
       key: "1",
-      product_image: <img src={image} height="50" width="50" />,
+      product_image: <img src={image} height="50" width="50" alt=''/>,
       product_name: "Irish Potato",
       buyer_name: "John Doe",
       buyer_location: "Douala",
@@ -293,7 +291,7 @@ export default function Orders() {
     },
     {
       key: "2",
-      product_image: <img src={image} height="50" width="50" />,
+      product_image: <img src={image} height="50" width="50" alt=''/>,
       product_name: "Cocoyam",
       buyer_name: "Mary Doe",
       buyer_location: "Buea",
@@ -303,7 +301,7 @@ export default function Orders() {
     },
     {
       key: "3",
-      product_image: <img src={image} height="50" width="50" />,
+      product_image: <img src={image} height="50" width="50" alt=''/>,
       product_name: "Tomato",
       buyer_name: "Tyler Lockwood",
       buyer_location: "Kribi",
@@ -313,7 +311,7 @@ export default function Orders() {
     },
     {
       key: "4",
-      product_image: <img src={image} height="50" width="50" />,
+      product_image: <img src={image} height="50" width="50" alt=''/>,
       product_name: "Egusi",
       buyer_name: "Prince Nico",
       buyer_location: "Yaounde",
@@ -322,9 +320,9 @@ export default function Orders() {
       action: actionFunc("/farmer-products", "/farmer-products", "670577192", "veruska@gmail.com"),
     },
   ];
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
+  // const onChange = (pagination, filters, sorter, extra) => {
+  //   console.log("params", pagination, filters, sorter, extra);
+  // };
   return (
     <div className="orders" style={{ textAlign: "left" }}>
       <Dashboard title="Orders">

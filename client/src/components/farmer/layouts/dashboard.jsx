@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Layout, Menu, Breadcrumb, Dropdown, Space } from "antd";
 import Title from "antd/lib/typography/Title";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   HomeOutlined,
   LikeOutlined,
@@ -13,7 +13,7 @@ import {
   LogoutOutlined,
   DownOutlined,
 } from "@ant-design/icons";
-import SubMenu from "antd/lib/menu/SubMenu";
+
 
 const { Header, Footer, Sider, Content } = Layout;
 // import logo from './logo.svg';
@@ -29,12 +29,6 @@ const headerStyle = {
   top: 0,
   zIndex: 2,
 };
-const contentStyle = {
-  minHeight: 120,
-  lineHeight: "120px",
-  color: "#fff",
-  backgroundColor: "#108ee9",
-};
 const siderStyle = {
   lineHeight: "100%",
   height: "100%",
@@ -49,33 +43,6 @@ const footerStyle = {
   backgroundColor: "var(--light)",
   textAlign: "center",
 };
-const items = [
-  {
-    key: "1",
-    label: (
-      <Link to="/farmer-profile" className="flex items-center ">
-        <UserOutlined className="pr-2" /> Profile
-      </Link>
-    ),
-  },
-  {
-    key: "2",
-    label: (
-      <Link to="/farmer-settings" className="flex items-center ">
-        <SettingOutlined className="pr-2" /> Settings
-      </Link>
-    ),
-  },
-  {
-    key: "3",
-    label: (
-      <Link to="/login" className="flex items-center ">
-        <LogoutOutlined className="pr-2" /> Log Out
-      </Link>
-    ),
-  },
-];
-
 
 const menuData = [
   {
@@ -145,6 +112,37 @@ const mapMenu = () => {
   });
 };
 export default function Dashboard(props) {
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem("farmerDealToken");
+    navigate('/login')
+  }
+  const items = [
+    {
+      key: "1",
+      label: (
+        <Link to="/farmer-profile" className="flex items-center ">
+          <UserOutlined className="pr-2" /> Profile
+        </Link>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <Link to="/farmer-settings" className="flex items-center ">
+          <SettingOutlined className="pr-2" /> Settings
+        </Link>
+      ),
+    },
+    {
+      key: "3",
+      label: (
+        <a type="button" onClick={logout} className="flex items-center ">
+          <LogoutOutlined className="pr-2" /> Log Out
+        </a>
+      ),
+    },
+  ];
   return (
     <div className="App" style={{ textAlign: "left" }}>
       {/* <Space direction="vertical" style={{ width: "100%" }} size={[0, 48]}> */}

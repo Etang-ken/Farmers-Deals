@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
-  ShopOutlined,
   CheckCircleFilled,
   ExclamationCircleFilled,
   CalendarOutlined,
   EyeOutlined,
-  EditOutlined,
-  DeleteOutlined,
   EllipsisOutlined,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
 import Dashboard from "./layouts/dashboard";
 import DisplayProducts from "./fragments/display_products";
@@ -35,19 +32,16 @@ export default function Home() {
   const data = [
     {
       key: "1",
-      image: <img src={image} height="50" width="50" />,
+      image: <img src={image} height="50" width="50" alt="" />,
       name: "Irish tato",
       category: "Cash Crop",
       price: 5500 + " frs per 20 liters",
       quantity: "9 300kg bags",
-      action: actionFunc(
-        "/buyer-products/6/show",
-        "/buyer-orders/create"
-      ),
+      action: actionFunc("/buyer-products/6/show", "/buyer-orders/create"),
     },
     {
       key: "2",
-      image: <img src={image} height="50" width="50" />,
+      image: <img src={image} height="50" width="50" alt="" />,
       name: "Cocoyam",
       category: "Food Crop",
       price: 4500 + " frs per 20 liters",
@@ -56,7 +50,7 @@ export default function Home() {
     },
     {
       key: "3",
-      image: <img src={image} height="50" width="50" />,
+      image: <img src={image} height="50" width="50" alt="" />,
       name: "Tomato",
       category: "Cash Crop",
       price: 7000 + " frs per 20 liters",
@@ -65,7 +59,7 @@ export default function Home() {
     },
     {
       key: "4",
-      image: <img src={image} height="50" width="50" />,
+      image: <img src={image} height="50" width="50" alt="" />,
       name: "Egusi",
       category: "Food Crop",
       price: 2300 + " frs per 20 liters",
@@ -78,10 +72,11 @@ export default function Home() {
     return (
       <div className="bg-white rounded-lg p-3 w-full mb-3">
         <div className="flex items-center gap-2">
-          <img src={image} width="40px" className="!h-10 rounded-full" />
+          <img src={image} width="40px" className="!h-10 rounded-full" alt="" />
           <span className="pl-1">
             <p className="text-xs mb-1">
-              <span className="font-semibold">{name}</span> accepted your ordered for{" "}
+              <span className="font-semibold">{name}</span> accepted your
+              ordered for{" "}
               <span className="font-semibold">
                 {quantity} {product}
               </span>

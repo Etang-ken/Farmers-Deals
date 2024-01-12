@@ -14,6 +14,11 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    farmer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Farmer',
+        required: true
+      }
   },
   {
     timestamps: true, // Add timestamps

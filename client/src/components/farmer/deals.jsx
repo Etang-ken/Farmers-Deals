@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
 import { Table, Button, Input, Space } from "antd";
 import {
   SearchOutlined,
@@ -275,7 +274,7 @@ export default function Deals() {
     {
       key: "1",
       buyer: "Etang Kencliff",
-      product_image: <img src={image} height="50" width="50" />,
+      product_image: <img src={image} height="50" width="50" alt="" />,
       product_name: "Irish Potato",
       product_category: "Cash Crop",
       price: 5500 + " frs per 20 liters",
@@ -293,7 +292,7 @@ export default function Deals() {
     {
       key: "2",
       buyer: "John Doe",
-      product_image: <img src={image} height="50" width="50" />,
+      product_image: <img src={image} height="50" width="50" alt="" />,
       product_name: "Cocoyam",
       product_category: "Food Crop",
       price: 4500 + " frs per 20 liters",
@@ -311,7 +310,7 @@ export default function Deals() {
     {
       key: "3",
       buyer: "Emilie Church",
-      product_image: <img src={image} height="50" width="50" />,
+      product_image: <img src={image} height="50" width="50" alt="" />,
       product_name: "Tomato",
       product_category: "Cash Crop",
       price: 7000 + " frs per 20 liters",
@@ -329,7 +328,7 @@ export default function Deals() {
     {
       key: "4",
       buyer: "Lila Cruz",
-      product_image: <img src={image} height="50" width="50" />,
+      product_image: <img src={image} height="50" width="50" alt="" />,
       product_name: "Egusi",
       product_category: "Food Crop",
       price: 2300 + " frs per 20 liters",

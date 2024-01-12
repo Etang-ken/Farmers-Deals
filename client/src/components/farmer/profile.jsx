@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 // import { Link } from "react-router-dom";
 import { EditOutlined } from "@ant-design/icons";
 import { Image } from "antd";
@@ -8,6 +8,7 @@ import image from "../styles/farmer/image.jpg";
 import { Link } from "react-router-dom";
 
 export default function Profile() {
+  
   return (
     <div className="profile">
       <Dashboard title="Profile">

@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Table } from "antd";
-import { PlusOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  EyeOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import Dashboard from "../layouts/dashboard";
 import DisplayProducts from "../fragments/display_products";
 import "../../styles/farmer/products.css";
@@ -27,16 +31,20 @@ export default function Products() {
   const data = [
     {
       key: "1",
-      image: <img src={image} height="50" width="50" />,
+      image: <img src={image} height="50" width="50" alt="" />,
       name: "Irish Potato",
       category: "Cash Crop",
       price: 5500 + " frs per 20 liters",
       quantity: "9 300kg bags",
-      action: actionFunc("/farmer-products/6/show", "/farmer-products/6/edit", "/farmer-3"),
+      action: actionFunc(
+        "/farmer-products/6/show",
+        "/farmer-products/6/edit",
+        "/farmer-3"
+      ),
     },
     {
       key: "2",
-      image: <img src={image} height="50" width="50" />,
+      image: <img src={image} height="50" width="50" alt="" />,
       name: "Cocoyam",
       category: "Food Crop",
       price: 4500 + " frs per 20 liters",
@@ -45,7 +53,7 @@ export default function Products() {
     },
     {
       key: "3",
-      image: <img src={image} height="50" width="50" />,
+      image: <img src={image} height="50" width="50" alt="" />,
       name: "Tomato",
       category: "Cash Crop",
       price: 7000 + " frs per 20 liters",
@@ -54,7 +62,7 @@ export default function Products() {
     },
     {
       key: "4",
-      image: <img src={image} height="50" width="50" />,
+      image: <img src={image} height="50" width="50" alt="" />,
       name: "Egusi",
       category: "Food Crop",
       price: 2300 + " frs per 20 liters",
@@ -76,7 +84,7 @@ export default function Products() {
             </Link>
           </div>
         </div>
-        <DisplayProducts data={data}/>
+        <DisplayProducts data={data} />
       </Dashboard>
     </div>
   );

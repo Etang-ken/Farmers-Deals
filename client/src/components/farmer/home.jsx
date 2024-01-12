@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   ShopOutlined,
@@ -17,8 +17,13 @@ import image from "../styles/farmer/image.jpg";
 import image2 from "../styles/farmer/coffe3.jpg";
 import image3 from "../styles/farmer/cocoa2.jpg";
 import ShortBottomLine from "../common/short_bottom_line";
+import { useSelector, useDispatch } from 'react-redux'
+// import { increment } from "../state_slices/farmerSlice";
 
 export default function Home() {
+  const count = useSelector((state) => state.farmer.value)
+  // const dispatch = useDispatch()
+  console.log('count: ', count)
   const actionFunc = (viewUrl, editUrl, deleteUrl) => {
     return (
       <div className="flex gap-3">
@@ -37,7 +42,7 @@ export default function Home() {
   const data = [
     {
       key: "1",
-      image: <img src={image} height="50" width="50" />,
+      image: <img src={image} height="50" width="50" alt="" />,
       name: "Irish tato",
       category: "Cash Crop",
       price: 5500 + " frs per 20 liters",
@@ -50,7 +55,7 @@ export default function Home() {
     },
     {
       key: "2",
-      image: <img src={image} height="50" width="50" />,
+      image: <img src={image} height="50" width="50" alt="" />,
       name: "Cocoyam",
       category: "Food Crop",
       price: 4500 + " frs per 20 liters",
@@ -59,7 +64,7 @@ export default function Home() {
     },
     {
       key: "3",
-      image: <img src={image} height="50" width="50" />,
+      image: <img src={image} height="50" width="50" alt="" />,
       name: "Tomato",
       category: "Cash Crop",
       price: 7000 + " frs per 20 liters",
@@ -68,7 +73,7 @@ export default function Home() {
     },
     {
       key: "4",
-      image: <img src={image} height="50" width="50" />,
+      image: <img src={image} height="50" width="50" alt="" />,
       name: "Egusi",
       category: "Food Crop",
       price: 2300 + " frs per 20 liters",
@@ -81,7 +86,7 @@ export default function Home() {
     return (
       <div className="bg-white rounded-lg p-3 w-full mb-3">
         <div className="flex items-center gap-2">
-          <img src={image} width="40px" className="!h-10 rounded-full" />
+          <img src={image} width="40px" className="!h-10 rounded-full" alt="" />
           <span className="pl-1">
             <p className="text-xs mb-1">
               <span className="font-semibold">{name}</span> just ordered{" "}
@@ -107,7 +112,7 @@ export default function Home() {
     <div className="home">
       <Dashboard title="Dashboard">
         <h1 className="heading-1">Dashboard</h1>
-
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 justify-items-center">
           <div className="dashbox">
             <div>

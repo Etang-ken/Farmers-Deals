@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 // import { Link } from "react-router-dom";
 // import { MailOutlined } from "@ant-design/icons";
-import { Button, Form, Input, InputNumber, Select } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import Dashboard from "./layouts/dashboard";
 import ShortBottomLine from "../common/short_bottom_line";
 import "../styles/farmer/settings.css";
