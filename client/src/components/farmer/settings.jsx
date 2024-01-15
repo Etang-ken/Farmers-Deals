@@ -8,6 +8,8 @@ import { updateUser } from "../state_slices/farmerSlice";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { isValidPassword } from "../common/helper/functions";
+import ChangePassword from "./fragments/change_password";
 
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
@@ -32,7 +34,7 @@ export default function Settings() {
   const userData = useSelector((state) => state.farmer.user);
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState();
+  const [imageUrl, setImageUrl] = useState(null);
   const dispatch = useDispatch();
   const { Option } = Select;
 
@@ -88,7 +90,7 @@ export default function Settings() {
       formData.append(key, data[key]);
     });
 
-    if (imageUrl) {
+    if (imageUrl != null) {
       const blob = dataURLtoBlob(imageUrl);
       formData.append("image", blob, "profile-image.png");
     }
@@ -227,10 +229,8 @@ export default function Settings() {
                     className=""
                   >
                     <Select
-                      // defaultValue={userData?.gender ?? ""}
                       {...register("gender")}
                       onChange={(value, option) => {
-                        // Check if 'option' is defined before accessing its properties
                         if (option) {
                           console.log("Selected option name:", option.name);
                         }
@@ -362,6 +362,12 @@ export default function Settings() {
                         alt="avatar"
                         style={{ width: "100%" }}
                       />
+                    ) : userData?.imageUrl ? (
+                      <img
+                        src={userData?.imageUrl}
+                        alt="avatar"
+                        style={{ width: "100%" }}
+                      />
                     ) : (
                       uploadButton
                     )}
@@ -382,67 +388,7 @@ export default function Settings() {
                 <h3 className="heading-4 w-fit !mb-1">Change Password</h3>
                 <ShortBottomLine />
               </div>
-              <Form
-                layout="vertical"
-                initialValues={{ remember: true }}
-                // onFinish={onSave}
-              >
-                {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6"> */}
-                <Form.Item
-                  label="Current Password"
-                  name="current_password"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                  className=""
-                >
-                  <Input
-                    placeholder="Enter Current Password ..."
-                    className="h-10"
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  label="New Password"
-                  name="new_password"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                  className=""
-                >
-                  <Input
-                    placeholder="Enter New Password ..."
-                    className="h-10"
-                  />
-                </Form.Item>
-                {/* </div> */}
-
-                <Form.Item
-                  label="Repeat New Password"
-                  name="repeat_new_password"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                  className=""
-                >
-                  <Input
-                    placeholder="Repeat New Password ..."
-                    className="h-10"
-                  />
-                </Form.Item>
-
-                <div className="flex justify-end">
-                  <Button htmlType="submit" className="primary-button">
-                    Change
-                  </Button>
-                </div>
-              </Form>
+             <ChangePassword />
             </div>
           </div>
         </div>

@@ -1,10 +1,11 @@
 const Farmer = require("../../models/Farmer");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const path = require("path")
-const fs = require('fs');
+const path = require("path");
+const fs = require("fs");
 const secretKey = process.env.JWT_SECRET;
 
+console.log(process.env.BASE_URL)
 module.exports.register = async (req, res) => {
   try {
     const existingEmail = await Farmer.findOne({ email: req.body.email });
@@ -51,7 +52,7 @@ module.exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const farmer = await Farmer.findOne({ email });
+    const farmer = await Farmer.findOne({ email }).select('-password');
 
     if (!farmer) {
       return res.status(401).json({ message: "Invalid credentials" });
@@ -63,9 +64,7 @@ module.exports.login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Create and sign a JWT token upon successful authentication
     const jwttoken = jwt.sign({ userId: farmer._id }, secretKey);
-
     res
       .status(200)
       .json({ message: "Login successful", farmer: farmer, token: jwttoken });
@@ -77,10 +76,15 @@ module.exports.login = async (req, res) => {
 module.exports.getUser = async (req, res) => {
   try {
     const userId = req.user.userId;
-    const farmer = await Farmer.findById(userId);
-    res
-      .status(200)
-      .json({ message: "success getting user data", farmer: farmer });
+    const farmer = await Farmer.findById(userId).select('-password');
+    let imageUrl = null;
+    if (farmer.image) {
+      imageUrl = `${process.env.BASE_URL}/uploads/profile/${farmer.image}`;
+    }
+    res.status(200).json({
+      message: "success getting user data",
+      farmer: { ...farmer.toObject(), imageUrl: imageUrl },
+    });
   } catch (error) {
     res
       .status(500)
@@ -92,14 +96,14 @@ module.exports.updateUser = async (req, res) => {
   try {
     const userId = req.user.userId;
     const reqBody = req.body;
-    const existingFarmer = await Farmer.findById(userId);
-    if (existingFarmer && existingFarmer.image) {
+    const existingFarmer = await Farmer.findById(userId).select('-password');
+    if (existingFarmer && existingFarmer.image && req.file) {
       const imagePath = path.resolve(
         __dirname,
         "../../uploads/profile",
         existingFarmer.image
       );
-      console.log(imagePath)
+      console.log(imagePath);
       fs.unlinkSync(imagePath);
     }
 
@@ -123,12 +127,43 @@ module.exports.updateUser = async (req, res) => {
       },
       { new: true }
     );
+
+    let imageUrl = null;
+    if (farmer.image) {
+      imageUrl = `${process.env.BASE_URL}/uploads/profile/${farmer.image}`;
+    }
     res
       .status(200)
-      .json({ message: "User updated successfully.", farmer: farmer });
+      .json({
+        message: "User updated successfully.",
+        farmer: { ...farmer.toObject(), imageUrl: imageUrl },
+      });
   } catch (error) {
     res
       .status(500)
       .json({ message: "Erroor updating user data.", error: error });
+  }
+};
+
+module.exports.changePassword = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { currentPassword, newPassword } = req.body;
+
+    const user = await Farmer.findById(userId);
+
+    const isPasswordMatch = await bcrypt.compare(currentPassword, user.password);
+
+    if (!isPasswordMatch) {
+      return res.status(401).json({ message: 'Current password is incorrect.' });
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await Farmer.findByIdAndUpdate(userId, { password: hashedPassword });
+
+    res.status(200).json({ message: 'Password changed successfully.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error changing password.', error: error.message });
   }
 };

@@ -5,7 +5,7 @@
 /client/.pnp
 /client/.pnp.js
 /server/node_modules
-
+/server/uploads
 # testing
 /client/coverage
 

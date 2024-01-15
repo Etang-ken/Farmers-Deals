@@ -1,6 +1,7 @@
 const express = require('express');
 const connectToDb = require('./db/conn')
 const cors = require('cors');
+const path = require("path")
 
 const app = express();
 const bodyParser = require('body-parser');
@@ -10,6 +11,7 @@ const farmerRoutes = require('./routes/farmers-routes')
 // console.log(__dirname)
 app.use(cors())
 app.use(bodyParser.json());
+app.use('/uploads/profile', express.static(path.join(__dirname, 'uploads/profile')));
 app.get('/', (req, res) => {
   res.send('Hello, welcome to your Node.js server!');
 });
