@@ -1,6 +1,8 @@
 const Farmer = require("../../models/Farmer");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const path = require("path")
+const fs = require('fs');
 const secretKey = process.env.JWT_SECRET;
 
 module.exports.register = async (req, res) => {
@@ -11,12 +13,10 @@ module.exports.register = async (req, res) => {
     });
 
     if (existingEmail && existingUsername) {
-      return res
-        .status(400)
-        .json({
-          message: "Email and username already exist.",
-          code: "EMAIL_USERNAME_EXISTS",
-        });
+      return res.status(400).json({
+        message: "Email and username already exist.",
+        code: "EMAIL_USERNAME_EXISTS",
+      });
     } else if (existingEmail) {
       return res
         .status(400)
@@ -71,5 +71,64 @@ module.exports.login = async (req, res) => {
       .json({ message: "Login successful", farmer: farmer, token: jwttoken });
   } catch (error) {
     res.status(500).json({ message: "Login failed", error: error.message });
+  }
+};
+
+module.exports.getUser = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const farmer = await Farmer.findById(userId);
+    res
+      .status(200)
+      .json({ message: "success getting user data", farmer: farmer });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error getting user", error: error.message });
+  }
+};
+
+module.exports.updateUser = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const reqBody = req.body;
+    const existingFarmer = await Farmer.findById(userId);
+    if (existingFarmer && existingFarmer.image) {
+      const imagePath = path.resolve(
+        __dirname,
+        "../../uploads/profile",
+        existingFarmer.image
+      );
+      console.log(imagePath)
+      fs.unlinkSync(imagePath);
+    }
+
+    const dataToUpdate = {
+      email: reqBody.email,
+      firstName: reqBody.firstName,
+      lastName: reqBody.lastName,
+      phoneNumber: reqBody.phone,
+      gender: reqBody.gender,
+      city: reqBody.city,
+      region: reqBody.region,
+      location: reqBody.location,
+      language: reqBody.language,
+      about: reqBody.about,
+      image: req.file ? req.file.filename : undefined,
+    };
+    const farmer = await Farmer.findByIdAndUpdate(
+      userId,
+      {
+        $set: dataToUpdate,
+      },
+      { new: true }
+    );
+    res
+      .status(200)
+      .json({ message: "User updated successfully.", farmer: farmer });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Erroor updating user data.", error: error });
   }
 };

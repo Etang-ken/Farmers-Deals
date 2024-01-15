@@ -17,13 +17,9 @@ import image from "../styles/farmer/image.jpg";
 import image2 from "../styles/farmer/coffe3.jpg";
 import image3 from "../styles/farmer/cocoa2.jpg";
 import ShortBottomLine from "../common/short_bottom_line";
-import { useSelector, useDispatch } from 'react-redux'
 // import { increment } from "../state_slices/farmerSlice";
 
 export default function Home() {
-  const count = useSelector((state) => state.farmer.value)
-  // const dispatch = useDispatch()
-  console.log('count: ', count)
   const actionFunc = (viewUrl, editUrl, deleteUrl) => {
     return (
       <div className="flex gap-3">
@@ -33,7 +29,7 @@ export default function Home() {
         <Link to={editUrl} className="flex items-center text-lg">
           <EditOutlined className="text-blue-600 font-extrabold" />
         </Link>
-        <Link to={deleteUrl} className="flex items-center" danger>
+        <Link to={deleteUrl} className="flex items-center">
           <DeleteOutlined className="text-red-500 font-extrabold text-lg" />
         </Link>
       </div>

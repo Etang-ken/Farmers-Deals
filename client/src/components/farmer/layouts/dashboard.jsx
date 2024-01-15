@@ -14,10 +14,7 @@ import {
   DownOutlined,
 } from "@ant-design/icons";
 
-
 const { Header, Footer, Sider, Content } = Layout;
-// import logo from './logo.svg';
-// import "./App.css";
 
 const headerStyle = {
   color: "var(--white)",
@@ -87,12 +84,6 @@ const menuData = [
     icon: <SettingOutlined className="pr-2" />,
     title: "Settings",
   },
-  // {
-  //   key: "LogOut",
-  //   url: "/",
-  //   icon: <LogoutOutlined className="pr-2" />,
-  //   title: "LogOut",
-  // },
 ];
 
 const mapMenu = () => {
@@ -115,8 +106,8 @@ export default function Dashboard(props) {
   const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem("farmerDealToken");
-    navigate('/login')
-  }
+    navigate("/login");
+  };
   const items = [
     {
       key: "1",
@@ -145,13 +136,11 @@ export default function Dashboard(props) {
   ];
   return (
     <div className="App" style={{ textAlign: "left" }}>
-      {/* <Space direction="vertical" style={{ width: "100%" }} size={[0, 48]}> */}
       <Layout>
         <Header
           style={headerStyle}
           className="th-bg-primary-bold th-text-white"
         >
-          {/* <Avatar style={{ float: 'right' }} src='./dp.png' /> */}
           <Dropdown
             menu={{ items }}
             trigger={["click"]}
@@ -171,37 +160,9 @@ export default function Dashboard(props) {
           <Sider style={siderStyle} className="!fixed hidden md:block !z-50">
             <Menu mode="inline" className="">
               {mapMenu()}
-              <Menu.Item key="LogOut" className="hover:!bg-white">
-                <NavLink
-                  // className={({ isActive, isPending }) =>
-                  //   isActive
-                  //     ? "flex items-center activeClass"
-                  //     : "flex items-center"
-                  // }
-                  to='#'
-                >
-                  <LogoutOutlined className="pr-2" /> Log Out
-                </NavLink>
-              </Menu.Item>
-              {/* <SubMenu
-                title={
-                  <span>
-                    <MailOutlined />
-                    <span>About US</span>
-                  </span>
-                }
-              >
-                <Menu.ItemGroup key="AboutUS" title="Country 1">
-                  <Menu.Item key="location1" onClick={() => setNavMenuItem(1)}>
-                    Location 1
-                  </Menu.Item>
-                  <Menu.Item key="location2" onClick={() => setNavMenuItem(2)}> Location 2</Menu.Item>
-                </Menu.ItemGroup>
-              </SubMenu> */}
             </Menu>
           </Sider>
 
-          {/* mobile sider  */}
           <Sider
             style={siderStyle}
             className="!fixed sm:block md:hidden !z-50"
@@ -209,43 +170,23 @@ export default function Dashboard(props) {
             collapsedWidth="0"
           >
             <Menu mode="inline" style={siderStyle} className="">
-            {mapMenu()}
-              <Menu.Item key="LogOut" className="hover:!bg-white">
-                <NavLink
-                  // className={({ isActive, isPending }) =>
-                  //   isActive
-                  //     ? "flex items-center activeClass"
-                  //     : "flex items-center"
-                  // }
-                  to='#'
-                >
-                  <LogoutOutlined className="pr-2" /> Log Out
-                </NavLink>
-              </Menu.Item>
-              {/* <SubMenu
-                title={
-                  <span>
-                    <MailOutlined />
-                    <span>About US</span>
-                  </span>
-                }
-              >
-                <Menu.ItemGroup key="AboutUS" title="Country 1">
-                  <Menu.Item key="location1" onClick={() => setNavMenuItem(1)}>
-                    Location 1
-                  </Menu.Item>
-                  <Menu.Item key="location2" onClick={() => setNavMenuItem(2)}> Location 2</Menu.Item>
-                </Menu.ItemGroup>
-              </SubMenu> */}
+              {mapMenu()}
             </Menu>
           </Sider>
 
           <Layout>
             <Content className="sm:!px-0 sm:ml-0 md:ml-48 px-1 md:!pl-11 md:!pr-9">
-              <Breadcrumb style={{ margin: "16px 0" }}>
-                <Breadcrumb.Item>Farmer</Breadcrumb.Item>
-                <Breadcrumb.Item>{props.title}</Breadcrumb.Item>
-              </Breadcrumb>
+              <Breadcrumb
+                style={{ margin: "16px 0" }}
+                items={[
+                  {
+                    title: "Farmer",
+                  },
+                  {
+                    title: `${props.title}`,
+                  },
+                ]}
+              ></Breadcrumb>
               <div
                 style={{ background: "#fff", padding: 24, minHeight: 580 }}
                 className="mx-2 md:mx-0"

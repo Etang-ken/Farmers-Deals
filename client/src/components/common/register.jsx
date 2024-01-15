@@ -20,7 +20,7 @@ export default function Register() {
     setIsLoading(true);
     setShowUsedusernameOrEmail(0);
     axios
-      .post(`${process.env.REACT_APP_Host}/farmer/register`, {
+      .post(`${process.env.REACT_APP_API_URL}/farmer/register`, {
         username: formData.username,
         email: formData.email,
         password: formData.password,

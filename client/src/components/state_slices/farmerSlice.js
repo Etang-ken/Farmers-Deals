@@ -3,21 +3,16 @@ import { createSlice } from '@reduxjs/toolkit'
 export const farmerSlice = createSlice({
   name: 'farmer',
   initialState: {
-    value: 0,
+    user: {}
   },
   reducers: {
-    increment: (state) => {
-      state.value += 1
-    },
-    decrement: (state) => {
-      state.value -= 1
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload
+    updateUser: (state, payload) => {
+      state.user = payload.payload
+      console.log('this is user data: ',state.user)
     },
   },
 })
 
-export const { increment, decrement, incrementByAmount } = farmerSlice.actions
+export const { updateUser } = farmerSlice.actions
 
 export default farmerSlice.reducer

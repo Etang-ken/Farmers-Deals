@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config()
 const port = 5000; // Choose any available port
 const farmerRoutes = require('./routes/farmers-routes')
-
+// console.log(__dirname)
 app.use(cors())
 app.use(bodyParser.json());
 app.get('/', (req, res) => {

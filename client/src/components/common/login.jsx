@@ -4,12 +4,16 @@ import { Button, Form, Input, Spin } from "antd";
 import { LoginOutlined } from "@ant-design/icons";
 import { useForm } from "react-hook-form";
 import { isValidPassword } from "./helper/functions";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../state_slices/farmerSlice";
 import axios from "axios";
 
 export default function Login() {
   const [showValidCred, setShowValidCred] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const {
     register,
     formState: { errors },
@@ -20,12 +24,12 @@ export default function Login() {
     setIsLoading(true);
     setShowValidCred(0);
     axios
-      .post(`${process.env.REACT_APP_Host}/farmer/login`, {
+      .post(`${process.env.REACT_APP_API_URL}/farmer/login`, {
         email: formData.email,
         password: formData.password,
       })
       .then((res) => {
-        console.log("data: ", res.data.token);
+        dispatch(updateUser(res.data.farmer));
         localStorage.setItem("farmerDealToken", res.data.token);
         setShowValidCred(false);
         navigate("/farmer-home");
