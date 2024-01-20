@@ -52,7 +52,7 @@ module.exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const farmer = await Farmer.findOne({ email }).select('-password');
+    const farmer = await Farmer.findOne({ email });
 
     if (!farmer) {
       return res.status(401).json({ message: "Invalid credentials" });
@@ -79,7 +79,7 @@ module.exports.getUser = async (req, res) => {
     const farmer = await Farmer.findById(userId).select('-password');
     let imageUrl = null;
     if (farmer.image) {
-      imageUrl = `${process.env.BASE_URL}/uploads/profile/${farmer.image}`;
+      imageUrl = `${process.env.BASE_URL}/uploads/profiles/${farmer.image}`;
     }
     res.status(200).json({
       message: "success getting user data",
@@ -100,7 +100,7 @@ module.exports.updateUser = async (req, res) => {
     if (existingFarmer && existingFarmer.image && req.file) {
       const imagePath = path.resolve(
         __dirname,
-        "../../uploads/profile",
+        "../../uploads/profiles",
         existingFarmer.image
       );
       console.log(imagePath);
@@ -130,7 +130,7 @@ module.exports.updateUser = async (req, res) => {
 
     let imageUrl = null;
     if (farmer.image) {
-      imageUrl = `${process.env.BASE_URL}/uploads/profile/${farmer.image}`;
+      imageUrl = `${process.env.BASE_URL}/uploads/profiles/${farmer.image}`;
     }
     res
       .status(200)
@@ -141,7 +141,7 @@ module.exports.updateUser = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Erroor updating user data.", error: error });
+      .json({ message: "Error updating user data.", error: error });
   }
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Form,
@@ -11,6 +11,9 @@ import {
 } from "antd";
 import { UploadOutlined, PlusOutlined } from "@ant-design/icons/lib/icons";
 import Dashboard from "../layouts/dashboard";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import moment from "moment";
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -25,6 +28,13 @@ export default function EditProduct() {
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState([]);
+  const params = useParams();
+  const products = useSelector((state) => state.farmerProducts.products);
+  const [foundProduct, setFoundProduct] = useState(
+    products?.find((product) => product?._id == params.id)
+  );
+  const [form] = Form.useForm();
+
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -53,21 +63,42 @@ export default function EditProduct() {
       </div>
     </div>
   );
+  useEffect(() => {
+    const foundProd = products?.find((product) => product?._id === params.id);
+    setFoundProduct(foundProd);
 
+    if (foundProd) {
+      form.setFieldsValue({
+        name: foundProd.name,
+        category: foundProd.category,
+        unit_measurement: foundProd.unitMeasurement,
+        price_per_unit: foundProd.pricePerUnit,
+        location: foundProd.location,
+        description: foundProd.description,
+        quantity: foundProd.quantity,
+        date_harvested: foundProd.dateHarvested
+          ? moment(foundProd.dateHarvested)
+          : null,
+      });
+    }
+  }, [products, params.id, foundProduct, form]);
   return (
     <div className="edit-product">
       <Dashboard title="Products / Edit">
         <h1 className="heading-1">Edit Product</h1>
-
         <div className="w-full">
           <div className="section-box">
-            <Form layout="vertical" initialValues={{ remember: true }}>
+            <Form
+              layout="vertical"
+              initialValues={{ remember: true }}
+              form={form}
+            >
               <Form.Item
                 label="Image"
-                name="image"
+                name="product_image"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                   },
                 ]}
                 className=""
@@ -91,6 +122,11 @@ export default function EditProduct() {
                   rules={[
                     {
                       required: true,
+                      message: "Name is required",
+                    },
+                    {
+                      min: 3,
+                      message: "Name must have at least 3 characters",
                     },
                   ]}
                   className=""
@@ -106,6 +142,7 @@ export default function EditProduct() {
                   rules={[
                     {
                       required: true,
+                      message: "Category is required",
                     },
                   ]}
                   className=""
@@ -113,13 +150,13 @@ export default function EditProduct() {
                   <Select
                     defaultValue="Select Category ..."
                     options={[
-                      { value: "food_crop", label: "Food Crop" },
-                      //   { value: "cash_crop", label: "Cash Crop" },
-                      { value: "feed_crop", label: "Feed Crop" },
-                      { value: "fibre_crop", label: "Fibre Crop" },
-                      { value: "oil_crop", label: "Oil Crop" },
-                      { value: "ornamental_crop", label: "Ornamental Crop" },
-                      { value: "industrial_crop", label: "Industrial Crop" },
+                      { value: "", label: "Select Category ..." },
+                      { value: "Food Crop", label: "Food Crop" },
+                      { value: "Feed Crop", label: "Feed Crop" },
+                      { value: "Fibre Crop", label: "Fibre Crop" },
+                      { value: "Oil Crop", label: "Oil Crop" },
+                      { value: "Ornamental Crop", label: "Ornamental Crop" },
+                      { value: "Industrial Crop", label: "Industrial Crop" },
                     ]}
                     className="h-10"
                   />
@@ -127,10 +164,11 @@ export default function EditProduct() {
 
                 <Form.Item
                   label="Unit of Measurement"
-                  name="unit"
+                  name="unit_measurement"
                   rules={[
                     {
                       required: true,
+                      message: "Unit if Measurement is required",
                     },
                   ]}
                   className=""
@@ -147,7 +185,8 @@ export default function EditProduct() {
                   rules={[
                     {
                       required: true,
-                      type: "number",
+                      message:
+                        "Please enter a valid number for Price per Unit Measurement",
                     },
                   ]}
                   className=""
@@ -156,19 +195,43 @@ export default function EditProduct() {
                 </Form.Item>
 
                 <Form.Item
-                  label="Price per Unit Measurement"
-                  name="price_per_unit"
+                  label="Location"
+                  name="location"
                   rules={[
                     {
                       required: true,
-                      type: "number",
+                      message: "Location is required.",
+                    },
+                    {
+                      min: 3,
+                      message: "Location must have at least 3 characters",
                     },
                   ]}
                   className=""
                 >
-                  <Input placeholder="e.g 25,000" className="h-10" />
+                  <Input
+                    placeholder="e.g Tombel, South West"
+                    className="h-10"
+                  />
                 </Form.Item>
               </div>
+
+              <Form.Item
+                label="Description"
+                name="description"
+                // rules={[
+                //   {
+                //     required: true,
+                //   },
+                // ]}
+                className=""
+              >
+                <Input.TextArea
+                  rows="5"
+                  placeholder="e.g Healthy cocoyams ..."
+                  className="h-10"
+                />
+              </Form.Item>
 
               <div className="pt-5">
                 <div className="pb-2">

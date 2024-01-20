@@ -1,46 +1,14 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
-const path = require('path')
-const fs = require('fs');
+const path = require("path");
+const fs = require("fs");
 const router = express.Router();
 const productControlller = require("../controllers/ProductController");
 const userController = require("../controllers/auth/FarmerController");
+const { storage } = require("../utils/functions");
 
 const secretKey = process.env.JWT_SECRET;
-
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "./uploads/profile");
-//   },
-//   filename: function (req, file, cb) {
-//     const ext = path.extname(file.originalname);
-//     cb(null, `${Date.now()}${ext}`);
-//   },
-// });
-
-const createFolderIfNotExists = (folderPath) => {
-  if (!fs.existsSync(folderPath)) {
-    fs.mkdirSync(folderPath, { recursive: true });
-  }
-};
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    const destinationFolder = "./uploads/profile";
-    
-    // Create the folder if it doesn't exist
-    createFolderIfNotExists(destinationFolder);
-
-    cb(null, destinationFolder);
-  },
-  filename: function (req, file, cb) {
-    const ext = path.extname(file.originalname);
-    cb(null, `user_${Date.now()}${ext}`);
-  },
-});
-
-const upload = multer({ storage: storage });
 
 function verifyJwtToken(req, res, next) {
   const authHeader = req.headers["authorization"];
@@ -59,16 +27,46 @@ function verifyJwtToken(req, res, next) {
   }
 }
 
+// const createFolderIfNotExists = (folderPath) => {
+//   if (!fs.existsSync(folderPath)) {
+//     fs.mkdirSync(folderPath, { recursive: true });
+//   }
+// };
+
+const userStorage = storage("./uploads/profiles", "user");
+
+const productStorage = storage("./uploads/products", "product");
+
+const otherProductImagesStorage = storage("./uploads/other_products", "other_product");
+
+const userUpload = multer({ storage: userStorage });
+const productUpload = multer({ storage: productStorage });
+// const otherProductImageUpload = multer({ storage: otherProductImagesStorage });
+
 router.post("/register", userController.register);
 router.post("/login", userController.login);
-router.post("/product", verifyJwtToken, productControlller.postProduct);
+// after auth
 router.get("/", verifyJwtToken, userController.getUser);
 router.post(
   "/update",
   verifyJwtToken,
-  upload.single("image"),
+  userUpload.single("image"),
   userController.updateUser
 );
 router.post("/change-password", verifyJwtToken, userController.changePassword);
+
+//products
+router.post(
+  "/product/create",
+  verifyJwtToken,
+  productUpload.fields([{ name: 'product_image', maxCount: 1 }, { name: 'other_product_images', maxCount: 10 }]),
+  // otherProductImageUpload.array("other_product_images", 10),
+  productControlller.postProduct
+);
+router.get(
+  "/product/all",
+  verifyJwtToken,
+  productControlller.getAll
+);
 
 module.exports = router;

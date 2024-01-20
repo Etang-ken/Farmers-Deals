@@ -2,23 +2,50 @@ const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
   {
-    title: {
+    name: {
+      type: String,
+      required: true,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    unitMeasurement: {
+      type: String,
+      required: true,
+    },
+    pricePerUnit: {
+      type: Number,
+      required: true,
+    },
+    location: {
       type: String,
       required: true,
     },
     description: {
       type: String,
-      required: true,
+      required: false,
+      default: null
     },
-    price: {
+    quantity: {
       type: Number,
+      required: false,
+      default: 0,
+    },
+    dateHarvested: {
+      type: Date,
+      required: false,
+      default: null,
+    },
+    image: {
+      type: String,
       required: true,
     },
     farmer: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Farmer',
-        required: true
-      }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Farmer",
+      required: true,
+    },
   },
   {
     timestamps: true, // Add timestamps

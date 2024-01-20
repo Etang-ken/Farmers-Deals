@@ -7,7 +7,7 @@ import { isValidPassword } from "./helper/functions";
 import axios from "axios";
 
 export default function Register() {
-  const [showUsedUsernameOrEmail, setShowUsedusernameOrEmail] = useState(0);
+  const [showUsedUsernameOrEmail, setShowUsedUsernameOrEmail] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const {
@@ -18,7 +18,7 @@ export default function Register() {
 
   const onSave = (formData) => {
     setIsLoading(true);
-    setShowUsedusernameOrEmail(0);
+    setShowUsedUsernameOrEmail(0);
     axios
       .post(`${process.env.REACT_APP_API_URL}/farmer/register`, {
         username: formData.username,
@@ -27,7 +27,7 @@ export default function Register() {
       })
       .then((res) => {
         console.log("data: ", res.data);
-        setShowUsedusernameOrEmail(0);
+        setShowUsedUsernameOrEmail(0);
         navigate("/login");
         setIsLoading(false);
       })
@@ -37,19 +37,19 @@ export default function Register() {
           err.response.status === 400 &&
           err.response.data.code === "EMAIL_EXISTS"
         ) {
-          setShowUsedusernameOrEmail(1);
+          setShowUsedUsernameOrEmail(1);
         } else if (
           err.response.status === 400 &&
           err.response.data.code === "USERNAME_EXISTS"
         ) {
-          setShowUsedusernameOrEmail(2);
+          setShowUsedUsernameOrEmail(2);
         } else if (
           err.response.status === 400 &&
           err.response.data.code === "EMAIL_USERNAME_EXISTS"
         ) {
-          setShowUsedusernameOrEmail(3);
+          setShowUsedUsernameOrEmail(3);
         } else {
-          setShowUsedusernameOrEmail(0);
+          setShowUsedUsernameOrEmail(0);
         }
         setIsLoading(false);
       });

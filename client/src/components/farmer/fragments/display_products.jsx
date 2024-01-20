@@ -5,15 +5,17 @@ import {
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
-  EyeOutlined
+  EyeOutlined,
 } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import "../../styles/farmer/products.css";
+import { useSelector } from "react-redux";
 
 export default function DisplayProducts(props) {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+  const products = useSelector((state) => state.farmerProducts.products);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -149,10 +151,10 @@ export default function DisplayProducts(props) {
     },
     {
       title: "Price per Item",
-      dataIndex: "price",
-      key: "price",
+      dataIndex: "pricePerUnit",
+      key: "pricePerUnit",
       // width: "20%",
-      ...getColumnSearchProps("price"),
+      ...getColumnSearchProps("pricePerUnit"),
     },
     {
       title: "Quantity",
@@ -167,40 +169,53 @@ export default function DisplayProducts(props) {
       dataIndex: "action",
     },
   ];
-  // const data = [];
-  // for (let i = 0; i < 46; i++) {
-  //   data.push({
-  //     key: i,
-  //     name: `Edward King ${i}`,
-  //     age: 32,
-  //     address: `London, Park Lane no. ${i}`,
-  //   });
-  // }
+  const data = [];
 
-  // const actionFunc = (viewUrl, editUrl, deleteUrl) => {
-  //   return (
-  //     <div className="flex gap-3">
-  //       <Link to={viewUrl} className="flex items-center">
-  //         <EyeOutlined className="text-green-600 font-extrabold text-lg" />
-  //       </Link>
-  //       <Link to={editUrl} className="flex items-center text-lg">
-  //         <EditOutlined className="text-blue-600 font-extrabold" />
-  //       </Link>
-  //       <Link to={deleteUrl} className="flex items-center" danger>
-  //         <DeleteOutlined className="text-red-500 font-extrabold text-lg" />
-  //       </Link>
-  //     </div>
-  //   );
-  // };
-  
+  const actionFunc = (viewUrl, editUrl, deleteUrl) => {
+    return (
+      <div className="flex gap-3">
+        <Link to={viewUrl} className="flex items-center">
+          <EyeOutlined className="text-green-600 font-extrabold text-lg" />
+        </Link>
+        <Link to={editUrl} className="flex items-center text-lg">
+          <EditOutlined className="text-blue-600 font-extrabold" />
+        </Link>
+        <Link to={deleteUrl} className="flex items-center" danger>
+          <DeleteOutlined className="text-red-500 font-extrabold text-lg" />
+        </Link>
+      </div>
+    );
+  };
+
   // const onChange = (pagination, filters, sorter, extra) => {
   //   console.log("params", pagination, filters, sorter, extra);
   // };
+  // useState(() => {
+  products?.forEach((product) => {
+    data.push({
+      key: product?._id,
+      image: <img src={product?.imageUrl} height="50" width="50" alt="" />,
+      name: product?.name,
+      category: product?.category,
+      pricePerUnit: product?.pricePerUnit + " frs per " + product?.unitMeasurement,
+      quantity: product.quantity,
+      action: actionFunc(
+        "/farmer-products/" + product?._id + "/show",
+        "/farmer-products/" + product?._id + "/edit",
+        "/farmer-3"
+      ),
+    });
+  });
+  // }, []);
   return (
     <div className="products" style={{ textAlign: "left" }}>
-        <div className="table-div">
-          <Table columns={columns} dataSource={props.data} pagination={props.showPagination}/>
-        </div>
+      <div className="table-div">
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={true}
+        />
+      </div>
     </div>
   );
 }

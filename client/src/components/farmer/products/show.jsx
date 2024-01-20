@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image } from "antd";
 import Dashboard from "../layouts/dashboard";
 import image from "../../styles/farmer/image.jpg";
 import image2 from "../../styles/farmer/cocoa1.jpg";
 import image3 from "../../styles/farmer/cocoa2.jpg";
 import image4 from "../../styles/farmer/coffe3.jpg";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ShortBottomLine from "../../common/short_bottom_line";
+import { useSelector } from "react-redux";
 
 export default function ShowProduct() {
+  const [foundProduct, setFoundProduct] = useState(null);
+  const params = useParams();
+
+  const products = useSelector((state) => state.farmerProducts.products)
+
+  useEffect(() => {
+    const foundProduct = products?.find(product => product?._id === params.id);
+    if (foundProduct) {
+      setFoundProduct(foundProduct);
+      console.log(foundProduct)
+    }
+  }, [products]);
   return (
     <div className="show-product">
       <Dashboard title="Products / Coco">
