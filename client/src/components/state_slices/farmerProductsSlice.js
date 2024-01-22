@@ -7,8 +7,7 @@ export const farmerProductsSlice = createSlice({
   },
   reducers: {
     updateProducts: (state, payload) => {
-      state.products = payload.payload;
-      console.log("Products data: ", state.products);
+      state.products = payload.payload
     },
   },
 });

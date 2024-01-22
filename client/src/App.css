@@ -402,3 +402,13 @@ a:hover {
 .ant-form-item-explain-error {
   font-size: 11px;
 }
+
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer/Edge */
+}
+
+/* Hide scrollbar for Webkit browsers (Chrome, Safari) */
+*::-webkit-scrollbar {
+  display: none;
+}

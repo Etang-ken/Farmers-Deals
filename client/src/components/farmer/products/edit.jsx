@@ -8,12 +8,19 @@ import {
   Checkbox,
   DatePicker,
   Modal,
+  Image,
 } from "antd";
-import { UploadOutlined, PlusOutlined } from "@ant-design/icons/lib/icons";
+import {
+  UploadOutlined,
+  PlusOutlined,
+  DeleteFilled,
+} from "@ant-design/icons/lib/icons";
 import Dashboard from "../layouts/dashboard";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
+import axios from "axios";
+import { updateProducts } from "../../state_slices/farmerProductsSlice";
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -23,18 +30,21 @@ const getBase64 = (file) =>
   });
 
 export default function EditProduct() {
-  const [harvested, setHarvested] = useState(false);
+  const [harvested, setHarvested] = useState(true);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState([]);
+  const [productImages, setProductImages] = useState([]);
+  const [productImagesToDelete, setProductImagesToDelete] = useState([]);
   const params = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.farmerProducts.products);
   const [foundProduct, setFoundProduct] = useState(
-    products?.find((product) => product?._id == params.id)
+    products?.find((product) => product?._id === params.id)
   );
   const [form] = Form.useForm();
-
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -51,6 +61,18 @@ export default function EditProduct() {
     setHarvested(e.target.checked);
   };
 
+  const handleRemoveImage = (imageId) => {
+    const updatedProductImages = productImages.filter(
+      (productImage) => productImage._id !== imageId
+    );
+
+    setProductImagesToDelete([...productImagesToDelete, imageId]);
+
+    setProductImages(updatedProductImages);
+
+    // console.log(productImagesToDelete);
+  };
+
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -63,7 +85,51 @@ export default function EditProduct() {
       </div>
     </div>
   );
+
+  const onUpdate = (data) => {
+    const userToken = localStorage.getItem("farmerDealToken");
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      if (data[key] !== undefined && data[key] !== null) {
+        formData.append(key, data[key]);
+      }
+    });
+    if (data.product_image) {
+      formData.append("product_image", data.product_image.file.originFileObj);
+    }
+    // console.log(foundProduct?._id)
+    formData.append("product_id", foundProduct?._id);
+    formData.append("images_to_delete", productImagesToDelete);
+    console.log(fileList);
+    if (fileList.length > 0) {
+      fileList.forEach((file) => {
+        formData.append("other_product_images", file.originFileObj);
+      });
+    }
+
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/farmer/product/update`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        dispatch(updateProducts(res.data.products));
+        navigate("/farmer-products");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
+    const userToken = localStorage.getItem("farmerDealToken");
     const foundProd = products?.find((product) => product?._id === params.id);
     setFoundProduct(foundProd);
 
@@ -80,17 +146,35 @@ export default function EditProduct() {
           ? moment(foundProd.dateHarvested)
           : null,
       });
+      axios
+        .get(
+          `${process.env.REACT_APP_API_URL}/farmer/product/getImages/${foundProd._id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          setProductImages(res.data.productImages);
+        })
+        .catch((error) => {
+          console.log("Error: ", error);
+        });
     }
-  }, [products, params.id, foundProduct, form]);
+  }, [products, params.id, foundProduct]);
   return (
     <div className="edit-product">
       <Dashboard title="Products / Edit">
         <h1 className="heading-1">Edit Product</h1>
+        
         <div className="w-full">
           <div className="section-box">
             <Form
               layout="vertical"
               initialValues={{ remember: true }}
+              onFinish={onUpdate}
               form={form}
             >
               <Form.Item
@@ -104,15 +188,20 @@ export default function EditProduct() {
                 className=""
               >
                 <Upload
-                  //   action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  // action={foundProduct?.imageUrl}
                   listType="picture"
                   maxCount={1}
                 >
                   <Button htmlType="button" icon={<UploadOutlined />}>
-                    Upload Product Image{" "}
+                    Change Product Image{" "}
                   </Button>
                 </Upload>
               </Form.Item>
+              
+                <div className="bg-white p-2 rounded-md m-1 flex flex-wrap gap-3 items-center">
+                  <Image src={foundProduct?.imageUrl} className="!h-16 !w-16" />
+                  <small>Current Product Image</small>
+                </div>
               <hr />
               <br />
               <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2 lg:gap-6">
@@ -237,7 +326,7 @@ export default function EditProduct() {
                 <div className="pb-2">
                   <Checkbox onChange={checkTrue}>Products Harvested ?</Checkbox>
                 </div>
-                {harvested && (
+                {(foundProduct?.quantity > 0 || harvested) && (
                   <>
                     <hr />
                     <br />
@@ -287,9 +376,11 @@ export default function EditProduct() {
                           maxCount={10}
                           onPreview={handlePreview}
                           onChange={handleChange}
+                          multiple
                         >
-                          {fileList.length >= 8 ? null : uploadButton}
+                          {fileList.length >= 10 ? null : uploadButton}
                         </Upload>
+                        (max = 10 images)
                         <Modal
                           open={previewOpen}
                           title={previewTitle}
@@ -306,8 +397,46 @@ export default function EditProduct() {
                         </Modal>
                       </Form.Item>
                     </div>
+                    {productImages !== null && productImages.length > 0 && (
+                      <>
+                        <br />
+                        <hr />
+                        <br />
+                        <h5>Uploaded Product Images</h5>
+                        <div className="flex flex-wrap gap-3">
+                          {productImages?.map((prodImg) => {
+                            return (
+                              <div
+                                key={prodImg._id}
+                                className="bg-white flex flex-col shadow-sm p-2 rounded-lg gap-1"
+                              >
+                                <Image
+                                  src={prodImg.imageUrl}
+                                  alt=""
+                                  className="!h-24 !w-24"
+                                />
+                                <DeleteFilled
+                                  onClick={() => {
+                                    handleRemoveImage(prodImg._id);
+                                  }}
+                                  className="ml-auto text-red-500 pl-1"
+                                />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </>
+                    )}
                   </>
                 )}
+                <br />
+                <br />
+                <Button
+                  htmlType="submit"
+                  className="primary-button flex w-fit mt-auto ml-auto"
+                >
+                  Update Product
+                </Button>
               </div>
             </Form>
           </div>

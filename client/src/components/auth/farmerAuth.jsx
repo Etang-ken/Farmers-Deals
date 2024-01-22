@@ -31,7 +31,6 @@ export default function FarmerAuthenticator({ children }) {
               },
             })
             .then((res) => {
-              console.log(res.data);
               dispatch(updateProducts(res.data.products));
             })
             .catch((err) => {

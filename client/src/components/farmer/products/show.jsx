@@ -9,70 +9,96 @@ import { Link, useParams } from "react-router-dom";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ShortBottomLine from "../../common/short_bottom_line";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 export default function ShowProduct() {
   const [foundProduct, setFoundProduct] = useState(null);
+  const [productImages, setProductImages] = useState([]);
   const params = useParams();
 
-  const products = useSelector((state) => state.farmerProducts.products)
+  const products = useSelector((state) => state.farmerProducts.products);
 
   useEffect(() => {
-    const foundProduct = products?.find(product => product?._id === params.id);
+    const userToken = localStorage.getItem("farmerDealToken");
+    const foundProduct = products?.find(
+      (product) => product?._id === params.id
+    );
     if (foundProduct) {
       setFoundProduct(foundProduct);
-      console.log(foundProduct)
+      console.log(foundProduct);
+      axios
+        .get(
+          `${process.env.REACT_APP_API_URL}/farmer/product/getImages/${foundProduct._id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          setProductImages(res.data.productImages);
+        })
+        .catch((error) => {
+          console.log("Error: ", error);
+        });
     }
-  }, [products]);
+  }, [products, foundProduct, params.id]);
   return (
     <div className="show-product">
-      <Dashboard title="Products / Coco">
+      <Dashboard title={`Products / ${foundProduct?.name}`}>
         <h1 className="heading-1">Show Product</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div>
             <div className="p-3 rounded-lg shadow-xl w-fit">
-              <Image className="!h-72 !w-96" src={image} alt='' />
+              <Image
+                className="!h-72 !w-96"
+                src={foundProduct?.imageUrl}
+                alt=""
+              />
             </div>
-            <div className="flex flex-wrap p-3 h-fit">
-              <div className="p-3 rounded-lg shadow-xl">
-                <Image className="!h-20 !w-20" src={image} alt='' />
-              </div>
-              <div className="p-3 rounded-lg shadow-xl">
-                <Image className="!h-20 !w-20" src={image2} alt='' />
-              </div>
-              <div className="p-3 rounded-lg shadow-xl">
-                <Image className="!h-20 !w-20" src={image3} alt='' />
-              </div>
-              <div className="p-3 rounded-lg shadow-xl">
-                <Image className="!h-20 !w-20" src={image4} alt='' />
-              </div>
+            <div className="flex p-3 h-fit !overflow-x-auto">
+              {productImages !== null &&
+                productImages.length > 0 &&
+                productImages?.map((prodImg) => {
+                  return (
+                    <div
+                      key={prodImg._id}
+                      className="p-3 rounded-lg shadow-xl min-w-[90px] min-h-[90px]"
+                    >
+                      <Image
+                        className="!h-[75px] !w-[75px]"
+                        src={prodImg.imageUrl}
+                        alt=""
+                      />
+                    </div>
+                  );
+                })}
             </div>
           </div>
 
           <div className="details">
-            <h1 className="text-2xl font-inter">$ 20.00</h1>
-            <h1 className="text-4xl font-inter mb-1 th-text-primary">
-              Cocoyam
+            <h1 className="text-2xl font-inter">
+              XAF {foundProduct?.pricePerUnit}
             </h1>
-            <p className="text-xs uppercase my-0">Cash Crop</p>
+            <h1 className="text-4xl font-inter mb-1 th-text-primary">
+              {foundProduct?.name}
+            </h1>
+            <p className="text-xs uppercase my-0">{foundProduct?.category}</p>
 
-            <p className="pt-5">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, est.
-              Saepe, nulla. Omnis exercitationem dignissimos dolorum, laudantium
-              minima ut cum fugiat odio quidem beatae nulla voluptate corrupti
-              vel pariatur amet!
-            </p>
+            <p className="pt-5">{foundProduct?.description ?? "-"}</p>
 
             <div className="flex flex-wrap gap-10 mt-10">
               <Link
-                to="/farmer-products/9/edit"
+                to={`/farmer-products/${params.id}/edit`}
                 className="primary-button flex w-fit mt-auto"
               >
                 <EditOutlined className="pr-2" /> Edit
               </Link>
               <Link
                 to="/farmer-products"
-                className="danger-button flex w-fit  mt-auto"
+                className="danger-button flex w-fit mt-auto"
               >
                 <DeleteOutlined className="pr-2" /> Delete
               </Link>
@@ -93,21 +119,29 @@ export default function ShowProduct() {
             <ShortBottomLine />
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-6 px-2 bg-slate-50 !justify-items-center text-center">
-            <div className="p-3 rounded-lg shadow-xl w-fit !h-fit">
-              <Link to="/farmer-products">
-                <img
-                  className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
-                  src={image} alt=''
-                />
-              </Link>
-              <h3 className="pt-3">Image 1</h3>
-            </div>
+            {products
+              .filter((product) => product._id !== foundProduct?._id)
+              .map((prod) => {
+                return (
+                  <div key={prod._id} className="p-3 rounded-lg shadow-xl w-fit !h-fit">
+                    <Link to={`/farmer-products/${prod._id}/show`}>
+                      <img
+                        className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
+                        src={prod.imageUrl}
+                        alt=""
+                      />
+                    </Link>
+                    <h3 className="pt-3">{prod.name}</h3>
+                  </div>
+                );
+              })}
 
-            <div className="p-3 rounded-lg shadow-xl w-fit !h-fit">
+            {/* <div className="p-3 rounded-lg shadow-xl w-fit !h-fit">
               <Link to="/farmer-products">
                 <img
                   className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
-                  src={image2} alt=''
+                  src={image2}
+                  alt=""
                 />
               </Link>
               <h3 className="pt-3">Image 2</h3>
@@ -117,7 +151,8 @@ export default function ShowProduct() {
               <Link to="/farmer-products">
                 <img
                   className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
-                  src={image3} alt=''
+                  src={image3}
+                  alt=""
                 />
               </Link>
               <h3 className="pt-3">Image 3</h3>
@@ -127,11 +162,12 @@ export default function ShowProduct() {
               <Link to="/farmer-products">
                 <img
                   className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
-                  src={image4} alt=''
+                  src={image4}
+                  alt=""
                 />
               </Link>
               <h3 className="pt-3">Image 5</h3>
-            </div>
+            </div> */}
           </div>
         </div>
       </Dashboard>

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Table, Button, Input, Space } from "antd";
+import { Table, Button, Input, Space, Modal, message } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -9,13 +9,18 @@ import {
 } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import "../../styles/farmer/products.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { updateProducts } from "../../state_slices/farmerProductsSlice";
 
 export default function DisplayProducts(props) {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState();
   const products = useSelector((state) => state.farmerProducts.products);
+  const dispatch = useDispatch();
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -171,7 +176,7 @@ export default function DisplayProducts(props) {
   ];
   const data = [];
 
-  const actionFunc = (viewUrl, editUrl, deleteUrl) => {
+  const actionFunc = (viewUrl, editUrl, deleteFunc) => {
     return (
       <div className="flex gap-3">
         <Link to={viewUrl} className="flex items-center">
@@ -180,29 +185,67 @@ export default function DisplayProducts(props) {
         <Link to={editUrl} className="flex items-center text-lg">
           <EditOutlined className="text-blue-600 font-extrabold" />
         </Link>
-        <Link to={deleteUrl} className="flex items-center" danger>
+        <a type="button" onClick={deleteFunc} className="flex items-center">
           <DeleteOutlined className="text-red-500 font-extrabold text-lg" />
-        </Link>
+        </a>
       </div>
     );
   };
 
-  // const onChange = (pagination, filters, sorter, extra) => {
-  //   console.log("params", pagination, filters, sorter, extra);
-  // };
-  // useState(() => {
+  const showDeleteModal = (prod) => {
+    setIsModalOpen(true);
+    setProductToDelete(prod);
+  };
+
+  const confirmDeleteProduct = () => {
+    const userToken = localStorage.getItem("farmerDealToken");
+
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/farmer/product/delete`,
+        {
+          product_id: productToDelete._id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        dispatch(updateProducts(res.data.products));
+        setIsModalOpen(false)
+        message.success("Product deleted successfully.");
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   products?.forEach((product) => {
     data.push({
       key: product?._id,
       image: <img src={product?.imageUrl} height="50" width="50" alt="" />,
       name: product?.name,
       category: product?.category,
-      pricePerUnit: product?.pricePerUnit + " frs per " + product?.unitMeasurement,
+      pricePerUnit:
+        product?.pricePerUnit + " frs per " + product?.unitMeasurement,
       quantity: product.quantity,
       action: actionFunc(
         "/farmer-products/" + product?._id + "/show",
         "/farmer-products/" + product?._id + "/edit",
-        "/farmer-3"
+        () => {
+          showDeleteModal(product);
+        }
       ),
     });
   });
@@ -210,11 +253,23 @@ export default function DisplayProducts(props) {
   return (
     <div className="products" style={{ textAlign: "left" }}>
       <div className="table-div">
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={true}
-        />
+        <Modal
+          title="Delete Product"
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={null}
+        >
+          <p>
+            Are you sure you want to delete this product (
+            <b>{productToDelete?.name}</b>)?{" "}
+          </p>
+          <br />
+          <a type="button" onClick={confirmDeleteProduct} className="danger-button w-fit ml-auto">
+            Yes, Delete
+          </a>
+        </Modal>
+        <Table columns={columns} dataSource={data} pagination={true} />
       </div>
     </div>
   );

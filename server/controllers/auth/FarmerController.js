@@ -151,14 +151,13 @@ module.exports.changePassword = async (req, res) => {
     const { currentPassword, newPassword } = req.body;
 
     const user = await Farmer.findById(userId);
-
     const isPasswordMatch = await bcrypt.compare(currentPassword, user.password);
 
     if (!isPasswordMatch) {
       return res.status(401).json({ message: 'Current password is incorrect.' });
     }
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
 
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
     await Farmer.findByIdAndUpdate(userId, { password: hashedPassword });
 
     res.status(200).json({ message: 'Password changed successfully.' });

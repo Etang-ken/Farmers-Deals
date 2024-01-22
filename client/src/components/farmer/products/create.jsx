@@ -13,6 +13,8 @@ import { UploadOutlined, PlusOutlined } from "@ant-design/icons/lib/icons";
 import Dashboard from "../layouts/dashboard";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { updateProducts } from "../../state_slices/farmerProductsSlice";
+import { useDispatch } from "react-redux";
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -28,6 +30,7 @@ export default function CreateProduct() {
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -88,6 +91,7 @@ export default function CreateProduct() {
       )
       .then((res) => {
         console.log(res.data);
+        dispatch(updateProducts(res.data.products));
         navigate("/farmer-products");
       })
       .catch((err) => {
@@ -264,7 +268,16 @@ export default function CreateProduct() {
                     <hr />
                     <br />
                     <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2 lg:gap-6">
-                      <Form.Item label="Quantity" name="quantity" className="">
+                      <Form.Item
+                        label="Quantity"
+                        name="quantity"
+                        rules={[
+                          {
+                            required: harvested,
+                          },
+                        ]}
+                        className=""
+                      >
                         <Input
                           type="number"
                           placeholder="e.g 5"
@@ -274,6 +287,11 @@ export default function CreateProduct() {
                       <Form.Item
                         label="Date harvested"
                         name="date_harvested"
+                        rules={[
+                          {
+                            required: harvested,
+                          },
+                        ]}
                         className=""
                       >
                         <DatePicker className="w-full" />
@@ -292,8 +310,9 @@ export default function CreateProduct() {
                           onChange={handleChange}
                           multiple
                         >
-                          {fileList.length >= 8 ? null : uploadButton}
+                          {fileList.length >= 10 ? null : uploadButton}
                         </Upload>
+                        <small>(max = 10 images)</small>
                         <Modal
                           open={previewOpen}
                           title={previewTitle}
@@ -316,7 +335,7 @@ export default function CreateProduct() {
                 <br />
                 <Button
                   htmlType="submit"
-                  className="primary-button flex w-fit  mt-auto"
+                  className="primary-button flex w-fit mt-auto ml-auto"
                 >
                   Save Product
                 </Button>

@@ -1,17 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  PlusOutlined,
-  EyeOutlined,
-  EditOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import Dashboard from "../layouts/dashboard";
 import DisplayProducts from "../fragments/display_products";
 import "../../styles/farmer/products.css";
 
 export default function Products() {
-  
   return (
     <div className="products" style={{ textAlign: "left" }}>
       <Dashboard title="Products">
@@ -25,7 +19,9 @@ export default function Products() {
               <PlusOutlined className="pr-2 !font-extrabold" /> Add Product
             </Link>
           </div>
+        
         </div>
+
         <DisplayProducts />
       </Dashboard>
     </div>

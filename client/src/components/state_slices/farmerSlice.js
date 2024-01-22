@@ -8,7 +8,6 @@ export const farmerSlice = createSlice({
   reducers: {
     updateUser: (state, payload) => {
       state.user = payload.payload
-      console.log('this is user data: ',state.user)
     },
   },
 })

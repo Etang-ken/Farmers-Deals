@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Layout,
-  Menu,
-  Breadcrumb,
-  Dropdown,
-  Space,
-  Row,
-  Col,
-  Spin,
-} from "antd";
+import { Layout, Menu, Breadcrumb, Dropdown, Space } from "antd";
 import Title from "antd/lib/typography/Title";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
@@ -22,6 +13,8 @@ import {
   LogoutOutlined,
   DownOutlined,
 } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { updateSidebarShow } from "../../state_slices/navBar";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -114,6 +107,8 @@ const mapMenu = () => {
 
 export default function Dashboard(props) {
   const navigate = useNavigate();
+  const showSidebar = useSelector((state) => state.sidebarShow.show);
+  const dispatch = useDispatch();
   const logout = () => {
     localStorage.removeItem("farmerDealToken");
     navigate("/login");
@@ -144,6 +139,9 @@ export default function Dashboard(props) {
       ),
     },
   ];
+  useEffect(() => {
+    dispatch(updateSidebarShow(true));
+  }, [])
   return (
     <div className="App" style={{ textAlign: "left" }}>
       <Layout>
@@ -177,6 +175,10 @@ export default function Dashboard(props) {
             style={siderStyle}
             className="!fixed sm:block md:hidden !z-50"
             collapsible
+            collapsed={showSidebar}
+            onCollapse={() => {
+              dispatch(updateSidebarShow(!showSidebar));
+            }}
             collapsedWidth="0"
           >
             <Menu mode="inline" style={siderStyle} className="">
@@ -184,7 +186,7 @@ export default function Dashboard(props) {
             </Menu>
           </Sider>
 
-          <Layout>
+          <Layout onClick={() => {dispatch(updateSidebarShow(true))}}>
             <Content className="sm:!px-0 sm:ml-0 md:ml-48 px-1 md:!pl-11 md:!pr-9">
               <Breadcrumb
                 style={{ margin: "16px 0" }}
