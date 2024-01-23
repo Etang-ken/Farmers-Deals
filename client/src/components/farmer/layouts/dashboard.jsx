@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Layout, Menu, Breadcrumb, Dropdown, Space } from "antd";
 import Title from "antd/lib/typography/Title";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import {
   HomeOutlined,
   LikeOutlined,
@@ -15,6 +21,7 @@ import {
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSidebarShow } from "../../state_slices/navBar";
+import FarmerAuthenticator from "../../auth/farmerAuth";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -46,43 +53,43 @@ const footerStyle = {
 const menuData = [
   {
     key: "Dashboard",
-    url: "/farmer-home",
+    url: "/farmer/home",
     icon: <HomeOutlined className="pr-2" />,
     title: "Dashboard",
   },
   {
     key: "Products",
-    url: "/farmer-products",
+    url: "/farmer/products",
     icon: <ShopOutlined className="pr-2" />,
     title: "Products",
   },
   {
     key: "Deals",
-    url: "/farmer-deals",
+    url: "/farmer/deals",
     icon: <LikeOutlined className="pr-2" />,
     title: "Deals",
   },
   {
     key: "Orders",
-    url: "/farmer-orders",
+    url: "/farmer/orders",
     icon: <ShoppingCartOutlined className="pr-2" />,
     title: "Orders",
   },
   {
     key: "Images",
-    url: "/farmer-images",
+    url: "/farmer/images",
     icon: <FileImageOutlined className="pr-2" />,
     title: "Images",
   },
   {
     key: "Profile",
-    url: "/farmer-profile",
+    url: "/farmer/profile",
     icon: <UserOutlined className="pr-2" />,
     title: "Profile",
   },
   {
     key: "Settings",
-    url: "/farmer-settings",
+    url: "/farmer/settings",
     icon: <SettingOutlined className="pr-2" />,
     title: "Settings",
   },
@@ -105,9 +112,11 @@ const mapMenu = () => {
   });
 };
 
-export default function Dashboard(props) {
+export default function FarmerDashboard() {
   const navigate = useNavigate();
+  const params = useParams();
   const showSidebar = useSelector((state) => state.sidebarShow.show);
+  const breadcrumbTitle = useSelector((state) => state.breadcrumbTitle.title);
   const dispatch = useDispatch();
   const logout = () => {
     localStorage.removeItem("farmerDealToken");
@@ -117,7 +126,7 @@ export default function Dashboard(props) {
     {
       key: "1",
       label: (
-        <Link to="/farmer-profile" className="flex items-center ">
+        <Link to="/farmer/profile" className="flex items-center ">
           <UserOutlined className="pr-2" /> Profile
         </Link>
       ),
@@ -125,7 +134,7 @@ export default function Dashboard(props) {
     {
       key: "2",
       label: (
-        <Link to="/farmer-settings" className="flex items-center ">
+        <Link to="/farmer/settings" className="flex items-center ">
           <SettingOutlined className="pr-2" /> Settings
         </Link>
       ),
@@ -141,77 +150,86 @@ export default function Dashboard(props) {
   ];
   useEffect(() => {
     dispatch(updateSidebarShow(true));
-  }, [])
+  }, [params]);
   return (
-    <div className="App" style={{ textAlign: "left" }}>
-      <Layout>
-        <Header
-          style={headerStyle}
-          className="th-bg-primary-bold th-text-white"
-        >
-          <Dropdown
-            menu={{ items }}
-            trigger={["click"]}
-            className="float-right"
-          >
-            <Link to="#" className="th-text-white w-auto hover:!text-slate-300">
-              <Space>
-                My Profile <DownOutlined />
-              </Space>
-            </Link>
-          </Dropdown>
-          <Title style={{ color: "var(--white)" }} level={3}>
-            Kencliff
-          </Title>
-        </Header>
+    <FarmerAuthenticator>
+      <div className="App" style={{ textAlign: "left" }}>
         <Layout>
-          <Sider style={siderStyle} className="!fixed hidden md:block !z-50">
-            <Menu mode="inline" className="">
-              {mapMenu()}
-            </Menu>
-          </Sider>
-
-          <Sider
-            style={siderStyle}
-            className="!fixed sm:block md:hidden !z-50"
-            collapsible
-            collapsed={showSidebar}
-            onCollapse={() => {
-              dispatch(updateSidebarShow(!showSidebar));
-            }}
-            collapsedWidth="0"
+          <Header
+            style={headerStyle}
+            className="th-bg-primary-bold th-text-white"
           >
-            <Menu mode="inline" style={siderStyle} className="">
-              {mapMenu()}
-            </Menu>
-          </Sider>
-
-          <Layout onClick={() => {dispatch(updateSidebarShow(true))}}>
-            <Content className="sm:!px-0 sm:ml-0 md:ml-48 px-1 md:!pl-11 md:!pr-9">
-              <Breadcrumb
-                style={{ margin: "16px 0" }}
-                items={[
-                  {
-                    title: "Farmer",
-                  },
-                  {
-                    title: `${props.title}`,
-                  },
-                ]}
-              ></Breadcrumb>
-              <div
-                style={{ background: "#fff", padding: 24, minHeight: 580 }}
-                className="mx-2 md:mx-0"
+            <Dropdown
+              menu={{ items }}
+              trigger={["click"]}
+              className="float-right"
+            >
+              <Link
+                to="#"
+                className="th-text-white w-auto hover:!text-slate-300"
               >
-                {props.children}
-              </div>
-            </Content>
-            {/* <CareerDetails player={selectedPlayer} visible={visible} onClose={onClose} /> */}
-            <Footer style={footerStyle}>Created by Kencliff</Footer>
+                <Space>
+                  My Profile <DownOutlined />
+                </Space>
+              </Link>
+            </Dropdown>
+            <Title style={{ color: "var(--white)" }} level={3}>
+              Kencliff
+            </Title>
+          </Header>
+          <Layout>
+            <Sider style={siderStyle} className="!fixed hidden md:block !z-50">
+              <Menu mode="inline" className="">
+                {mapMenu()}
+              </Menu>
+            </Sider>
+
+            <Sider
+              style={siderStyle}
+              className="!fixed sm:block md:hidden !z-50"
+              collapsible
+              collapsed={showSidebar}
+              onCollapse={() => {
+                dispatch(updateSidebarShow(!showSidebar));
+              }}
+              collapsedWidth="0"
+            >
+              <Menu mode="inline" style={siderStyle} className="">
+                {mapMenu()}
+              </Menu>
+            </Sider>
+
+            <Layout
+              onClick={() => {
+                dispatch(updateSidebarShow(true));
+              }}
+            >
+              <Content className="sm:!px-0 sm:ml-0 md:ml-48 px-1 md:!pl-11 md:!pr-9">
+                <Breadcrumb
+                  style={{ margin: "16px 0" }}
+                  items={[
+                    {
+                      title: "Farmer",
+                    },
+                    {
+                      title: `${breadcrumbTitle}`,
+                    },
+                  ]}
+                ></Breadcrumb>
+                <div
+                  style={{ background: "#fff", padding: 24, minHeight: 580 }}
+                  className="mx-2 md:mx-0"
+                >
+                  <Outlet />
+                </div>
+              </Content>
+              {/* <CareerDetails player={selectedPlayer} visible={visible} onClose={onClose} /> */}
+              <Footer style={footerStyle}>Created by Kencliff</Footer>
+            </Layout>
           </Layout>
         </Layout>
-      </Layout>
-      {/* </Space> */}
-    </div>
+        {/* </Space> */}
+      </div>
+    </FarmerAuthenticator>
   );
 }

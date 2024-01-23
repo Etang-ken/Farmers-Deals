@@ -1,14 +1,15 @@
-import React from "react";
-// import { Link } from "react-router-dom";
-// import { MailOutlined } from "@ant-design/icons";
-import Dashboard from "./layouts/dashboard";
+import React, { useEffect } from "react";
+import { updateBreadcrubTitleShow } from "../state_slices/breadcrumbTitleSlice";
+import { useDispatch } from "react-redux";
 
 export default function Images() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(updateBreadcrubTitleShow("Images"));
+  }, []);
   return (
     <div className="images">
-      <Dashboard title="Images">
-        <h1 className="heading-1">Images</h1>
-      </Dashboard>
+      <h1 className="heading-1">Images</h1>
     </div>
   );
 }

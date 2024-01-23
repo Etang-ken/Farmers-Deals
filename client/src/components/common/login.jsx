@@ -32,7 +32,7 @@ export default function Login() {
         dispatch(updateUser(res.data.farmer));
         localStorage.setItem("farmerDealToken", res.data.token);
         setShowValidCred(false);
-        navigate("/farmer-home");
+        navigate("/farmer/home");
         setIsLoading(false);
       })
       .catch((err) => {
@@ -47,7 +47,7 @@ export default function Login() {
   useEffect(() => {
     const token = localStorage.getItem("farmerDealToken");
     if (token) {
-      navigate("/farmer-home");
+      navigate("/farmer/home");
     }
   }, [navigate]);
   return (

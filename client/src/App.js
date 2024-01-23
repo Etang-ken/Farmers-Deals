@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from "./components/common/register";
@@ -29,7 +29,7 @@ import BuyerProducts from "./components/buyer/products/index";
 import BuyerShowProduct from "./components/buyer/products/show";
 import BuyerCreateOrder from "./components/buyer/orders/create";
 import BuyerEditOrder from "./components/buyer/orders/edit";
-import FarmerAuthenticator from "./components/auth/farmerAuth";
+import FarmerDashboard from "./components/farmer/layouts/dashboard";
 const App = () => {
   return (
     <div className="App">
@@ -37,45 +37,24 @@ const App = () => {
         <Routes>
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
-          
-        </Routes>
 
-        {/* Farmer Routes  */}
+          {/* Farmer Routes  */}
 
-        <FarmerAuthenticator>
-          <Routes>
-            <Route exact path="/farmer-home" element={<FarmerHome />} />
-            <Route exact path="/farmer-products" element={<FarmerProducts />} />
-            <Route
-              exact
-              path="/farmer-products/create"
-              element={<FarmerCreateProduct />}
-            />
-            <Route
-              exact
-              path="/farmer-products/:id/show"
-              element={<FarmerShowProduct />}
-            />
-            <Route
-              exact
-              path="/farmer-products/:id/edit"
-              element={<FarmerEditProduct />}
-            />
-            <Route exact path="/farmer-deals" element={<FarmerDeals />} />
-            <Route exact path="/farmer-orders" element={<FarmerOrders />} />
-            <Route
-              exact
-              path="/farmer-orders/:id/show"
-              element={<FarmerShowOrder />}
-            />
-            <Route exact path="/farmer-images" element={<FarmerImages />} />
-            <Route exact path="/farmer-profile" element={<FarmerProfile />} />
-            <Route exact path="/farmer-settings" element={<FarmerSettings />} />
-          </Routes>
-        </FarmerAuthenticator>
+          <Route path="/farmer" element={<FarmerDashboard />}>
+            <Route path="home" element={<FarmerHome />} />
+            <Route path="products" element={<FarmerProducts />} />
+            <Route path="products/create" element={<FarmerCreateProduct />} />
+            <Route path="products/:id/show" element={<FarmerShowProduct />} />
+            <Route path="products/:id/edit" element={<FarmerEditProduct />} />
+            <Route path="deals" element={<FarmerDeals />} />
+            <Route path="orders" element={<FarmerOrders />} />
+            <Route path="orders/:id/show" element={<FarmerShowOrder />} />
+            <Route path="images" element={<FarmerImages />} />
+            <Route path="profile" element={<FarmerProfile />} />
+            <Route path="settings" element={<FarmerSettings />} />
+          </Route>
 
-        {/* Buyer Routes  */}
-        <Routes>
+          {/* Buyer Routes  */}
           <Route exact path="/buyer-home" element={<BuyerHome />} />
           <Route exact path="/buyer-products" element={<BuyerProducts />} />
           <Route

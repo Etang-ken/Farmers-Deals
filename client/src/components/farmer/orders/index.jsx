@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Table, Button, Input, Space } from "antd";
 import {
@@ -6,87 +6,19 @@ import {
   EyeOutlined,
   CloseCircleFilled,
   MailOutlined,
-  PhoneOutlined
+  PhoneOutlined,
 } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
-import Dashboard from "../layouts/dashboard";
 import "../../styles/farmer/orders.css";
 import image from "../../styles/farmer/image.jpg";
+import { useDispatch } from "react-redux";
+import { updateBreadcrubTitleShow } from "../../state_slices/breadcrumbTitleSlice";
 
 export default function Orders() {
-  // const columns = [
-  //   {
-  //     title: 'Name',
-  //     dataIndex: 'name',
-  //     filters: [
-  //       {
-  //         text: 'Joe',
-  //         value: 'Joe',
-  //       },
-  //       {
-  //         text: 'Category 1',
-  //         value: 'Category 1',
-  //         children: [
-  //           {
-  //             text: 'Yellow',
-  //             value: 'Yellow',
-  //           },
-  //           {
-  //             text: 'Pink',
-  //             value: 'Pink',
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         text: 'Category 2',
-  //         value: 'Category 2',
-  //         children: [
-  //           {
-  //             text: 'Green',
-  //             value: 'Green',
-  //           },
-  //           {
-  //             text: 'Black',
-  //             value: 'Black',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //     filterMode: 'tree',
-  //     filterSearch: true,
-  //     onFilter: (value, record) => record.name.includes(value),
-  //     width: '30%',
-  //   },
-  //   {
-  //     title: 'Age',
-  //     dataIndex: 'age',
-  //     sorter: (a, b) => a.age - b.age,
-  //   },
-  //   {
-  //     title: 'Address',
-  //     dataIndex: 'address',
-  //     filters: [
-  //       {
-  //         text: 'London',
-  //         value: 'London',
-  //       },
-  //       {
-  //         text: 'New York',
-  //         value: 'New York',
-  //       },
-  //     ],
-  //     onFilter: (value, record) => record.address.startsWith(value),
-  //     filterSearch: true,
-  //     width: '40%',
-  //   },
-  //   {
-  //     title: 'Action',
-  //     dataIndex: 'action'
-  //   },
-  // ];
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+  const dispatch = useDispatch();
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -248,89 +180,99 @@ export default function Orders() {
       dataIndex: "action",
     },
   ];
-  // const data = [];
-  // for (let i = 0; i < 46; i++) {
-  //   data.push({
-  //     key: i,
-  //     product_name: `Edward King ${i}`,
-  //     age: 32,
-  //     address: `London, Park Lane no. ${i}`,
-  //   });
-  // }
   const actionFunc = (viewUrl, cancelUrl, phoneUrl, emailUrl) => {
     return (
-        <div className="flex gap-3">
-          <Link to={viewUrl} className="flex items-center">
-            <EyeOutlined className="text-green-600 text-lg" />
-          </Link>
+      <div className="flex gap-3">
+        <Link to={viewUrl} className="flex items-center">
+          <EyeOutlined className="text-green-600 text-lg" />
+        </Link>
 
-          <Link to={cancelUrl} className="flex items-center" danger>
-            <CloseCircleFilled className="text-red-500 font-extrabold text-lg" />
-          </Link>
-          <span className="text-3xl th-text-primary font-semibold">|</span>
-          <Link to={"tel:" + phoneUrl} className="flex items-center">
-            <PhoneOutlined className="text-blue-600 text-lg" />
-          </Link>
+        <Link to={cancelUrl} className="flex items-center">
+          <CloseCircleFilled className="text-red-500 font-extrabold text-lg" />
+        </Link>
+        <span className="text-3xl th-text-primary font-semibold">|</span>
+        <Link to={"tel:" + phoneUrl} className="flex items-center">
+          <PhoneOutlined className="text-blue-600 text-lg" />
+        </Link>
 
-          <Link to={"mailto:" + emailUrl} className="flex items-center" danger>
-            <MailOutlined className="text-gray-500 font-extrabold text-lg" />
-          </Link>
-        </div>
-      )
-  }
+        <Link to={"mailto:" + emailUrl} className="flex items-center">
+          <MailOutlined className="text-gray-500 font-extrabold text-lg" />
+        </Link>
+      </div>
+    );
+  };
   const data = [
     {
       key: "1",
-      product_image: <img src={image} height="50" width="50" alt=''/>,
+      product_image: <img src={image} height="50" width="50" alt="" />,
       product_name: "Irish Potato",
       buyer_name: "John Doe",
       buyer_location: "Douala",
       latest_date_needed: "05-06-2023",
       quantity: "3 300kg bags",
-      action: actionFunc("/farmer-orders/100fdsjkuish/show", "/farmer-products", "670260611", "etang@gmail.com"),
+      action: actionFunc(
+        "/farmer/orders/100fdsjkuish/show",
+        "/farmer/products",
+        "670260611",
+        "etang@gmail.com"
+      ),
     },
     {
       key: "2",
-      product_image: <img src={image} height="50" width="50" alt=''/>,
+      product_image: <img src={image} height="50" width="50" alt="" />,
       product_name: "Cocoyam",
       buyer_name: "Mary Doe",
       buyer_location: "Buea",
       latest_date_needed: "09-05-2023",
       quantity: "2 300kg bags",
-      action: actionFunc("/farmer-products", "/farmer-products", "673928703", "ken@gmail.com"),
+      action: actionFunc(
+        "/farmer/products",
+        "/farmer/products",
+        "673928703",
+        "ken@gmail.com"
+      ),
     },
     {
       key: "3",
-      product_image: <img src={image} height="50" width="50" alt=''/>,
+      product_image: <img src={image} height="50" width="50" alt="" />,
       product_name: "Tomato",
       buyer_name: "Tyler Lockwood",
       buyer_location: "Kribi",
       latest_date_needed: "12-06-2023",
       quantity: "2 300kg bags",
-      action: actionFunc("/farmer-products", "/farmer-products", "652547170", "cliff@gmail.com"),
+      action: actionFunc(
+        "/farmer/products",
+        "/farmer/products",
+        "652547170",
+        "cliff@gmail.com"
+      ),
     },
     {
       key: "4",
-      product_image: <img src={image} height="50" width="50" alt=''/>,
+      product_image: <img src={image} height="50" width="50" alt="" />,
       product_name: "Egusi",
       buyer_name: "Prince Nico",
       buyer_location: "Yaounde",
       latest_date_needed: "22-05-2023",
       quantity: "2 50kg bags",
-      action: actionFunc("/farmer-products", "/farmer-products", "670577192", "veruska@gmail.com"),
+      action: actionFunc(
+        "/farmer/products",
+        "/farmer/products",
+        "670577192",
+        "veruska@gmail.com"
+      ),
     },
   ];
-  // const onChange = (pagination, filters, sorter, extra) => {
-  //   console.log("params", pagination, filters, sorter, extra);
-  // };
+
+  useEffect(() => {
+    dispatch(updateBreadcrubTitleShow("Orders"));
+  });
   return (
     <div className="orders" style={{ textAlign: "left" }}>
-      <Dashboard title="Orders">
-        <h1 className="heading-1">Orders</h1>
-        <div className="table-div">
-          <Table columns={columns} dataSource={data} id="orders-table" />
-        </div>
-      </Dashboard>
+      <h1 className="heading-1">Orders</h1>
+      <div className="table-div">
+        <Table columns={columns} dataSource={data} id="orders-table" />
+      </div>
     </div>
   );
 }

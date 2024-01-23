@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Table, Button, Input, Space } from "antd";
 import {
   SearchOutlined,
@@ -7,84 +7,16 @@ import {
   ExclamationCircleFilled,
 } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
-import Dashboard from "./layouts/dashboard";
 import "../styles/farmer/deals.css";
 import image from "../styles/farmer/image.jpg";
+import { useDispatch } from "react-redux";
+import { updateBreadcrubTitleShow } from "../state_slices/breadcrumbTitleSlice";
 
 export default function Deals() {
-  // const columns = [
-  //   {
-  //     title: 'Name',
-  //     dataIndex: 'name',
-  //     filters: [
-  //       {
-  //         text: 'Joe',
-  //         value: 'Joe',
-  //       },
-  //       {
-  //         text: 'Category 1',
-  //         value: 'Category 1',
-  //         children: [
-  //           {
-  //             text: 'Yellow',
-  //             value: 'Yellow',
-  //           },
-  //           {
-  //             text: 'Pink',
-  //             value: 'Pink',
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         text: 'Category 2',
-  //         value: 'Category 2',
-  //         children: [
-  //           {
-  //             text: 'Green',
-  //             value: 'Green',
-  //           },
-  //           {
-  //             text: 'Black',
-  //             value: 'Black',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //     filterMode: 'tree',
-  //     filterSearch: true,
-  //     onFilter: (value, record) => record.name.includes(value),
-  //     width: '30%',
-  //   },
-  //   {
-  //     title: 'Age',
-  //     dataIndex: 'age',
-  //     sorter: (a, b) => a.age - b.age,
-  //   },
-  //   {
-  //     title: 'Address',
-  //     dataIndex: 'address',
-  //     filters: [
-  //       {
-  //         text: 'London',
-  //         value: 'London',
-  //       },
-  //       {
-  //         text: 'New York',
-  //         value: 'New York',
-  //       },
-  //     ],
-  //     onFilter: (value, record) => record.address.startsWith(value),
-  //     filterSearch: true,
-  //     width: '40%',
-  //   },
-  //   {
-  //     title: 'Action',
-  //     dataIndex: 'action'
-  //   },
-  // ];
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+  const dispatch = useDispatch();
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -261,15 +193,6 @@ export default function Deals() {
       dataIndex: "status",
     },
   ];
-  // const data = [];
-  // for (let i = 0; i < 46; i++) {
-  //   data.push({
-  //     key: i,
-  //     name: `Edward King ${i}`,
-  //     age: 32,
-  //     address: `London, Park Lane no. ${i}`,
-  //   });
-  // }
   const data = [
     {
       key: "1",
@@ -347,26 +270,28 @@ export default function Deals() {
   const onChange = (pagination, filters, sorter, extra) => {
     console.log("params", pagination, filters, sorter, extra);
   };
+
+  useEffect(() => {
+    dispatch(updateBreadcrubTitleShow(" Deals"));
+  }, []);
   return (
     <div className="deals" style={{ textAlign: "left" }}>
-      <Dashboard title="Deals">
-        <div className="flex w-full">
-          <h1 className="heading-1">Deals</h1>
-          {/* <div className="ml-auto">
-            <Link to="/farmer-deal-requests" className="secondary-button">
+      <div className="flex w-full">
+        <h1 className="heading-1">Deals</h1>
+        {/* <div className="ml-auto">
+            <Link to="/farmer/deal-requests" className="secondary-button">
               View Deal Requests
             </Link>
           </div> */}
-        </div>
-        <div className="table-div">
-          <Table
-            columns={columns}
-            dataSource={data}
-            pagination={3}
-            id="deals-table"
-          />
-        </div>
-      </Dashboard>
+      </div>
+      <div className="table-div">
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={3}
+          id="deals-table"
+        />
+      </div>
     </div>
   );
 }

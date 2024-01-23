@@ -241,8 +241,8 @@ export default function DisplayProducts(props) {
         product?.pricePerUnit + " frs per " + product?.unitMeasurement,
       quantity: product.quantity,
       action: actionFunc(
-        "/farmer-products/" + product?._id + "/show",
-        "/farmer-products/" + product?._id + "/edit",
+        "/farmer/products/" + product?._id + "/show",
+        "/farmer/products/" + product?._id + "/edit",
         () => {
           showDeleteModal(product);
         }
