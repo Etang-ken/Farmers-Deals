@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import Dashboard from "../layouts/dashboard";
 import DisplayProducts from "../fragments/display_products";
 import "../../styles/buyer/products.css";
 
 import image from "../../styles/buyer/image.jpg";
+import { updateBreadcrumbTitleShow } from "../../state_slices/breadcrumbTitleSlice";
+import { useDispatch } from "react-redux";
 
 export default function Products() {
+  const dispatch = useDispatch();
   const actionFunc = (viewUrl, orderUrl) => {
     return (
       <div className="flex gap-3">
@@ -28,7 +30,7 @@ export default function Products() {
       category: "Cash Crop",
       price: 5500 + " frs per 20 liters",
       quantity: "9 300kg bags",
-      action: actionFunc("/buyer-products/6/show", "/buyer-orders/create"),
+      action: actionFunc("/buyer/products/6/show", "/buyer/orders/create"),
     },
     {
       key: "2",
@@ -37,7 +39,7 @@ export default function Products() {
       category: "Food Crop",
       price: 4500 + " frs per 20 liters",
       quantity: "10 300kg bags",
-      action: actionFunc("/buyer-4", "/buyer-5"),
+      action: actionFunc("/buyer/4", "/buyer/5"),
     },
     {
       key: "3",
@@ -46,7 +48,7 @@ export default function Products() {
       category: "Cash Crop",
       price: 7000 + " frs per 20 liters",
       quantity: "5 300kg bags",
-      action: actionFunc("/buyer-7", "/buyer-8"),
+      action: actionFunc("/buyer/7", "/buyer/8"),
     },
     {
       key: "4",
@@ -55,15 +57,17 @@ export default function Products() {
       category: "Food Crop",
       price: 2300 + " frs per 20 liters",
       quantity: "7 300kg bags",
-      action: actionFunc("/buyer-11", "/buyer-12"),
+      action: actionFunc("/buyer/11", "/buyer/12"),
     },
   ];
+
+  useEffect(() => {
+    dispatch(updateBreadcrumbTitleShow("Products"));
+  }, [dispatch]);
   return (
     <div className="products" style={{ textAlign: "left" }}>
-      <Dashboard title="Products">
-        <h1 className="heading-1">Products</h1>
-        <DisplayProducts data={data} />
-      </Dashboard>
+      <h1 className="heading-1">Products</h1>
+      <DisplayProducts data={data} />
     </div>
   );
 }

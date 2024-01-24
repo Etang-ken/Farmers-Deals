@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import ChangePassword from "./fragments/change_password";
-import { updateBreadcrubTitleShow } from "../state_slices/breadcrumbTitleSlice";
+import { updateBreadcrumbTitleShow } from "../state_slices/breadcrumbTitleSlice";
 
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
@@ -114,14 +114,14 @@ export default function Settings() {
   };
 
   useEffect(() => {
-    dispatch(updateBreadcrubTitleShow("Settings"));
-  }, []);
+    dispatch(updateBreadcrumbTitleShow("Settings"));
+  }, [dispatch]);
   return (
     <div className="settings">
       <h1 className="heading-1">Settings</h1>
       <div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div className="farmer/settings-left bg-slate-50">
+          <div className="farmer-settings-left bg-slate-50">
             <div className="mb-5">
               <h3 className="heading-4 w-fit !mb-1">Update Settings</h3>
               <ShortBottomLine />

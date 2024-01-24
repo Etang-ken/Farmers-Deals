@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Form, Input, Spin } from "antd";
 import { LoginOutlined } from "@ant-design/icons";
 import { useForm } from "react-hook-form";
-import { isValidPassword } from "./helper/functions";
+import { isValidPassword } from "../helper/functions";
 import { useDispatch } from "react-redux";
-import { updateUser } from "../state_slices/farmerSlice";
+import { updateUser } from "../../state_slices/buyer/buyerSlice";
 import axios from "axios";
 
-export default function FarmerLogin() {
+export default function BuyerLogin() {
   const [showValidCred, setShowValidCred] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -24,15 +24,15 @@ export default function FarmerLogin() {
     setIsLoading(true);
     setShowValidCred(0);
     axios
-      .post(`${process.env.REACT_APP_API_URL}/farmer/login`, {
+      .post(`${process.env.REACT_APP_API_URL}/buyer/login`, {
         email: formData.email,
         password: formData.password,
       })
       .then((res) => {
-        dispatch(updateUser(res.data.farmer));
-        localStorage.setItem("farmerDealToken", res.data.token);
+        dispatch(updateUser(res.data.buyer));
+        localStorage.setItem("buyerDealToken", res.data.token);
         setShowValidCred(false);
-        navigate("/farmer/home");
+        navigate("/buyer/home");
         setIsLoading(false);
       })
       .catch((err) => {
@@ -45,15 +45,15 @@ export default function FarmerLogin() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("farmerDealToken");
+    const token = localStorage.getItem("buyerDealToken");
     if (token) {
-      navigate("/farmer/home");
+      navigate("/buyer/home");
     }
   }, [navigate]);
   return (
     <div className="login th-text-white">
       <div className="my-10 mx-auto w-10/12 md:w-1/2 lg:w-4/12 rounded-3xl shadow">
-        <div className="h-24 w-full th-bg-primary rounded-t-3xl header">
+        <div className="h-24 w-full th-bg-third rounded-t-3xl header">
           <div className="h-3/6">
             <Link to="/">
               <p className="pl-3 pt-3">Logo</p>
@@ -149,7 +149,7 @@ export default function FarmerLogin() {
                 <Button
                   disabled={isLoading}
                   htmlType="submit"
-                  className="w-full th-bg-primary th-text-white h-11 rounded-full font-semibold flex items-center justify-center"
+                  className="w-full th-bg-third th-text-white h-11 rounded-full font-semibold flex items-center justify-center"
                 >
                   <span className="!flex items-center gap-2 text-white">
                     {isLoading && (
@@ -165,8 +165,8 @@ export default function FarmerLogin() {
               <div className="pt-6 text-center">
                 <small>Don't have an account?</small> <br />
                 <Link
-                  to="/register"
-                  className="font-bold th-text-primary text-lg"
+                  to="/buyer-register"
+                  className="font-bold th-text-third text-lg"
                 >
                   Sign Up
                 </Link>

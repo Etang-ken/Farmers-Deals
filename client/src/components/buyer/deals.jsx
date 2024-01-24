@@ -1,5 +1,4 @@
-import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
 import { Table, Button, Input, Space } from "antd";
 import {
   SearchOutlined,
@@ -8,14 +7,16 @@ import {
   ExclamationCircleFilled,
 } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
-import Dashboard from "./layouts/dashboard";
 import "../styles/buyer/deals.css";
 import image from "../styles/buyer/image.jpg";
+import { updateBreadcrumbTitleShow } from "../state_slices/breadcrumbTitleSlice";
+import { useDispatch } from "react-redux";
 
 export default function Deals() {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+  const dispatch = useDispatch()
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -132,7 +133,6 @@ export default function Deals() {
       title: "Farmer",
       dataIndex: "farmer",
       key: "farmer",
-      // width: "30%",
       ...getColumnSearchProps("location"),
       sorter: (a, b) => a.location.length - b.location.length,
     },
@@ -145,7 +145,6 @@ export default function Deals() {
       title: "Product Name",
       dataIndex: "product_name",
       key: "product_name",
-      // width: "30%",
       ...getColumnSearchProps("product_name"),
       sorter: (a, b) => a.product_name.length - b.product_name.length,
     },
@@ -153,7 +152,6 @@ export default function Deals() {
       title: "Product Category",
       dataIndex: "product_category",
       key: "product_category",
-      // width: "20%",
       ...getColumnSearchProps("product_category"),
       sorter: (a, b) => a.product_category.length - b.product_category.length,
     },
@@ -161,7 +159,6 @@ export default function Deals() {
       title: "Location",
       dataIndex: "location",
       key: "location",
-      // width: "30%",
       ...getColumnSearchProps("location"),
       sorter: (a, b) => a.location.length - b.location.length,
     },
@@ -169,7 +166,6 @@ export default function Deals() {
       title: "Price per Item",
       dataIndex: "price",
       key: "price",
-      // width: "20%",
       ...getColumnSearchProps("price"),
     },
     {
@@ -200,20 +196,12 @@ export default function Deals() {
       dataIndex: "status",
     },
   ];
-  // const data = [];
-  // for (let i = 0; i < 46; i++) {
-  //   data.push({
-  //     key: i,
-  //     name: `Edward King ${i}`,
-  //     age: 32,
-  //     address: `London, Park Lane no. ${i}`,
-  //   });
-  // }
+
   const data = [
     {
       key: "1",
       farmer: "Etang Kencliff",
-      product_image: <img src={image} height="50" width="50" />,
+      product_image: <img src={image} alt="" height="50" width="50" />,
       product_name: "Irish Potato",
       product_category: "Cash Crop",
       location: "Buea, Cameroon",
@@ -232,7 +220,7 @@ export default function Deals() {
     {
       key: "2",
       farmer: "John Doe",
-      product_image: <img src={image} height="50" width="50" />,
+      product_image: <img src={image} alt="" height="50" width="50" />,
       product_name: "Cocoyam",
       product_category: "Food Crop",
       location: "Buea, Cameroon",
@@ -251,7 +239,7 @@ export default function Deals() {
     {
       key: "3",
       farmer: "Emilie Church",
-      product_image: <img src={image} height="50" width="50" />,
+      product_image: <img src={image} alt="" height="50" width="50" />,
       product_name: "Tomato",
       product_category: "Cash Crop",
       location: "Buea, Cameroon",
@@ -270,7 +258,7 @@ export default function Deals() {
     {
       key: "4",
       farmer: "Lila Cruz",
-      product_image: <img src={image} height="50" width="50" />,
+      product_image: <img src={image} alt="" height="50" width="50" />,
       product_name: "Egusi",
       product_category: "Food Crop",
       location: "Buea, Cameroon",
@@ -287,29 +275,22 @@ export default function Deals() {
       ),
     },
   ];
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
+  useEffect(() => {
+    dispatch(updateBreadcrumbTitleShow("Deals"));
+  }, [dispatch]);
   return (
     <div className="deals" style={{ textAlign: "left" }}>
-      <Dashboard title="Deals">
-        <div className="flex w-full">
-          <h1 className="heading-1">Deals</h1>
-          {/* <div className="ml-auto">
-            <Link to="/buyer-deal-requests" className="secondary-button">
-              View Deal Requests
-            </Link>
-          </div> */}
-        </div>
-        <div className="table-div">
-          <Table
-            columns={columns}
-            dataSource={data}
-            pagination={3}
-            id="deals-table"
-          />
-        </div>
-      </Dashboard>
+      <div className="flex w-full">
+        <h1 className="heading-1">Deals</h1>
+      </div>
+      <div className="table-div">
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={3}
+          id="deals-table"
+        />
+      </div>
     </div>
   );
 }

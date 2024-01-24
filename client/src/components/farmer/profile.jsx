@@ -5,14 +5,14 @@ import { Image } from "antd";
 import "../styles/farmer/profile.css";
 import image from "../styles/farmer/image.jpg";
 import { Link } from "react-router-dom";
-import { updateBreadcrubTitleShow } from "../state_slices/breadcrumbTitleSlice";
+import { updateBreadcrumbTitleShow } from "../state_slices/breadcrumbTitleSlice";
 import { useDispatch } from "react-redux";
 
 export default function Profile() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(updateBreadcrubTitleShow("Profile"));
-  }, []);
+    dispatch(updateBreadcrumbTitleShow("Profile"));
+  }, [dispatch]);
   return (
     <div className="profile">
       <h1 className="heading-1">My Profile</h1>

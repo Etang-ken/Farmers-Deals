@@ -1,17 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const breadcrubTitleSlice = createSlice({
-  name: "breadcrubTitle",
+export const breadcrumbTitleSlice = createSlice({
+  name: "breadcrumbTitle",
   initialState: {
     title: '',
   },
   reducers: {
-    updateBreadcrubTitleShow: (state, payload) => {
+    updateBreadcrumbTitleShow: (state, payload) => {
       state.title = payload.payload;
     },
   },
 });
 
-export const { updateBreadcrubTitleShow } = breadcrubTitleSlice.actions;
+export const { updateBreadcrumbTitleShow } = breadcrumbTitleSlice.actions;
 
-export default breadcrubTitleSlice.reducer;
+export default breadcrumbTitleSlice.reducer;

@@ -10,7 +10,7 @@ import Highlighter from "react-highlight-words";
 import "../styles/farmer/deals.css";
 import image from "../styles/farmer/image.jpg";
 import { useDispatch } from "react-redux";
-import { updateBreadcrubTitleShow } from "../state_slices/breadcrumbTitleSlice";
+import { updateBreadcrumbTitleShow } from "../state_slices/breadcrumbTitleSlice";
 
 export default function Deals() {
   const [searchText, setSearchText] = useState("");
@@ -267,13 +267,10 @@ export default function Deals() {
       ),
     },
   ];
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
 
   useEffect(() => {
-    dispatch(updateBreadcrubTitleShow(" Deals"));
-  }, []);
+    dispatch(updateBreadcrumbTitleShow(" Deals"));
+  }, [dispatch]);
   return (
     <div className="deals" style={{ textAlign: "left" }}>
       <div className="flex w-full">

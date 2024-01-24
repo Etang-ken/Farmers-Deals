@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Form, Input, Spin } from "antd";
 import { FormOutlined } from "@ant-design/icons";
 import { useForm } from "react-hook-form";
-import { isValidPassword } from "./helper/functions";
+import { isValidPassword } from "../helper/functions";
 import axios from "axios";
 
-export default function FarmerRegister() {
+export default function BuyerRegister() {
   const [showUsedUsernameOrEmail, setShowUsedUsernameOrEmail] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export default function FarmerRegister() {
     setIsLoading(true);
     setShowUsedUsernameOrEmail(0);
     axios
-      .post(`${process.env.REACT_APP_API_URL}/farmer/register`, {
+      .post(`${process.env.REACT_APP_API_URL}/buyer/register`, {
         username: formData.username,
         email: formData.email,
         password: formData.password,
@@ -28,7 +28,7 @@ export default function FarmerRegister() {
       .then((res) => {
         console.log("data: ", res.data);
         setShowUsedUsernameOrEmail(0);
-        navigate("/login");
+        navigate("/buyer-login");
         setIsLoading(false);
       })
       .catch((err) => {
@@ -58,7 +58,7 @@ export default function FarmerRegister() {
   return (
     <div className="register th-text-white">
       <div className="my-10 mx-auto w-10/12 md:w-1/2 lg:w-4/12 rounded-3xl shadow">
-        <div className="h-24 w-full th-bg-primary rounded-t-3xl header">
+        <div className="h-24 w-full th-bg-third rounded-t-3xl header">
           <div className="h-3/6">
             <Link to="/">
               <p className="pl-3 pt-3">Logo</p>
@@ -228,7 +228,7 @@ export default function FarmerRegister() {
                 <Button
                 disabled={isLoading}
                   htmlType="submit"
-                  className="w-full th-bg-primary th-text-white hover:text-white h-11 rounded-full font-semibold flex items-center justify-center"
+                  className="w-full th-bg-third th-text-white hover:text-white h-11 rounded-full font-semibold flex items-center justify-center"
                 >
                   <span className="!flex items-center gap-2 text-white">
                   
@@ -244,7 +244,7 @@ export default function FarmerRegister() {
 
               <div className="pt-6 text-center">
                 <span>Already have an account?</span> <br />
-                <Link to="/login" className="font-bold th-text-primary text-lg">
+                <Link to="/login" className="font-bold th-text-third text-lg">
                   Sign In
                 </Link>
               </div>

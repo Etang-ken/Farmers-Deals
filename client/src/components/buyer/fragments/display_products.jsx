@@ -1,17 +1,10 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
 import { Table, Button, Input, Space } from "antd";
 import {
-  DeleteOutlined,
-  EditOutlined,
   SearchOutlined,
-  EyeOutlined,
-  PlusOutlined
 } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
-import Dashboard from "../layouts/dashboard";
 import "../../styles/buyer/products.css";
-import image from "../../styles/buyer/image.jpg";
 
 export default function DisplayProducts(props) {
   const [searchText, setSearchText] = useState("");
@@ -170,40 +163,16 @@ export default function DisplayProducts(props) {
       dataIndex: "action",
     },
   ];
-  // const data = [];
-  // for (let i = 0; i < 46; i++) {
-  //   data.push({
-  //     key: i,
-  //     name: `Edward King ${i}`,
-  //     age: 32,
-  //     address: `London, Park Lane no. ${i}`,
-  //   });
-  // }
 
-  const actionFunc = (viewUrl, editUrl, deleteUrl) => {
-    return (
-      <div className="flex gap-3">
-        <Link to={viewUrl} className="flex items-center">
-          <EyeOutlined className="text-green-600 font-extrabold text-lg" />
-        </Link>
-        <Link to={editUrl} className="flex items-center text-lg">
-          <EditOutlined className="text-blue-600 font-extrabold" />
-        </Link>
-        <Link to={deleteUrl} className="flex items-center" danger>
-          <DeleteOutlined className="text-red-500 font-extrabold text-lg" />
-        </Link>
-      </div>
-    );
-  };
-  
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
   return (
     <div className="products" style={{ textAlign: "left" }}>
-        <div className="table-div">
-          <Table columns={columns} dataSource={props.data} pagination={props.showPagination}/>
-        </div>
+      <div className="table-div">
+        <Table
+          columns={columns}
+          dataSource={props.data}
+          pagination={props.showPagination}
+        />
+      </div>
     </div>
   );
 }

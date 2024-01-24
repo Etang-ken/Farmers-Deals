@@ -403,6 +403,11 @@ a:hover {
   font-size: 11px;
 }
 
+:where(.css-dev-only-do-not-override-htwhyh).ant-menu-light .ant-menu-item-selected, :where(.css-dev-only-do-not-override-htwhyh).ant-menu-light>.ant-menu .ant-menu-item-selected {
+  background-color: white;
+  color: inherit;
+}
+
 * {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer/Edge */

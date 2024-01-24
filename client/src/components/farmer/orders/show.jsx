@@ -9,14 +9,14 @@ import {
 } from "@ant-design/icons";
 import image from "../../styles/farmer/image.jpg";
 import ShortBottomLine from "../../common/short_bottom_line";
-import { updateBreadcrubTitleShow } from "../../state_slices/breadcrumbTitleSlice";
+import { updateBreadcrumbTitleShow } from "../../state_slices/breadcrumbTitleSlice";
 import { useDispatch } from "react-redux";
 
 export default function ShowOrder() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(updateBreadcrubTitleShow("Orders / Show"));
-  }, []);
+    dispatch(updateBreadcrumbTitleShow("Orders / Show"));
+  }, [dispatch]);
   return (
     <div className="show-order">
       <h1 className="heading-1">Show Order</h1>

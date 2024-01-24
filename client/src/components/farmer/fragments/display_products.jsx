@@ -185,9 +185,13 @@ export default function DisplayProducts(props) {
         <Link to={editUrl} className="flex items-center text-lg">
           <EditOutlined className="text-blue-600 font-extrabold" />
         </Link>
-        <a type="button" onClick={deleteFunc} className="flex items-center">
+        <button
+          type="button"
+          onClick={deleteFunc}
+          className="flex items-center"
+        >
           <DeleteOutlined className="text-red-500 font-extrabold text-lg" />
-        </a>
+        </button>
       </div>
     );
   };
@@ -216,7 +220,7 @@ export default function DisplayProducts(props) {
       .then((res) => {
         console.log(res.data);
         dispatch(updateProducts(res.data.products));
-        setIsModalOpen(false)
+        setIsModalOpen(false);
         message.success("Product deleted successfully.");
       })
       .catch((error) => {
@@ -265,9 +269,13 @@ export default function DisplayProducts(props) {
             <b>{productToDelete?.name}</b>)?{" "}
           </p>
           <br />
-          <a type="button" onClick={confirmDeleteProduct} className="danger-button w-fit ml-auto">
+          <button
+            type="button"
+            onClick={confirmDeleteProduct}
+            className="danger-button w-fit ml-auto"
+          >
             Yes, Delete
-          </a>
+          </button>
         </Modal>
         <Table columns={columns} dataSource={data} pagination={true} />
       </div>

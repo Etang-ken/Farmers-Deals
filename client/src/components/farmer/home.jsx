@@ -16,7 +16,7 @@ import image from "../styles/farmer/image.jpg";
 import image2 from "../styles/farmer/coffe3.jpg";
 import image3 from "../styles/farmer/cocoa2.jpg";
 import ShortBottomLine from "../common/short_bottom_line";
-import { updateBreadcrubTitleShow } from "../state_slices/breadcrumbTitleSlice";
+import { updateBreadcrumbTitleShow } from "../state_slices/breadcrumbTitleSlice";
 import { useDispatch } from "react-redux";
 
 export default function Home() {
@@ -106,8 +106,8 @@ export default function Home() {
     );
   };
   useEffect(() => {
-    dispatch(updateBreadcrubTitleShow("Dashboard"));
-  }, []);
+    dispatch(updateBreadcrumbTitleShow("Dashboard"));
+  }, [dispatch]);
   return (
     <div className="home">
       <h1 className="heading-1">Dashboard</h1>

@@ -12,7 +12,7 @@ import Highlighter from "react-highlight-words";
 import "../../styles/farmer/orders.css";
 import image from "../../styles/farmer/image.jpg";
 import { useDispatch } from "react-redux";
-import { updateBreadcrubTitleShow } from "../../state_slices/breadcrumbTitleSlice";
+import { updateBreadcrumbTitleShow } from "../../state_slices/breadcrumbTitleSlice";
 
 export default function Orders() {
   const [searchText, setSearchText] = useState("");
@@ -265,8 +265,8 @@ export default function Orders() {
   ];
 
   useEffect(() => {
-    dispatch(updateBreadcrubTitleShow("Orders"));
-  });
+    dispatch(updateBreadcrumbTitleShow("Orders"));
+  }, [dispatch]);
   return (
     <div className="orders" style={{ textAlign: "left" }}>
       <h1 className="heading-1">Orders</h1>

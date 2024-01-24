@@ -5,13 +5,13 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ShortBottomLine from "../../common/short_bottom_line";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { updateBreadcrubTitleShow } from "../../state_slices/breadcrumbTitleSlice";
+import { updateBreadcrumbTitleShow } from "../../state_slices/breadcrumbTitleSlice";
 
 export default function ShowProduct() {
   const [foundProduct, setFoundProduct] = useState(null);
   const [productImages, setProductImages] = useState([]);
   const params = useParams();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const products = useSelector((state) => state.farmerProducts.products);
 
@@ -21,7 +21,7 @@ export default function ShowProduct() {
       (product) => product?._id === params.id
     );
     if (foundProduct) {
-      dispatch(updateBreadcrubTitleShow('Products / '+ foundProduct?.name))
+      dispatch(updateBreadcrumbTitleShow("Products / " + foundProduct?.name));
       setFoundProduct(foundProduct);
       console.log(foundProduct);
       axios
@@ -41,7 +41,7 @@ export default function ShowProduct() {
           console.log("Error: ", error);
         });
     }
-  }, [products, foundProduct, params.id]);
+  }, [products, foundProduct, params.id, dispatch]);
   return (
     <div className="show-product">
       <h1 className="heading-1">Show Product</h1>
@@ -101,9 +101,6 @@ export default function ShowProduct() {
             </Link>
           </div>
         </div>
-        {/* <div className="mt-auto">
-               
-              </div> */}
       </div>
       <br />
       <br />
@@ -135,39 +132,6 @@ export default function ShowProduct() {
                 </div>
               );
             })}
-
-          {/* <div className="p-3 rounded-lg shadow-xl w-fit !h-fit">
-              <Link to="/farmer/products">
-                <img
-                  className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
-                  src={image2}
-                  alt=""
-                />
-              </Link>
-              <h3 className="pt-3">Image 2</h3>
-            </div>
-
-            <div className="p-3 rounded-lg shadow-xl w-fit !h-fit">
-              <Link to="/farmer/products">
-                <img
-                  className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
-                  src={image3}
-                  alt=""
-                />
-              </Link>
-              <h3 className="pt-3">Image 3</h3>
-            </div>
-
-            <div className="p-3 rounded-lg shadow-xl w-fit !h-fit">
-              <Link to="/farmer/products">
-                <img
-                  className="!h-20 !w-20 md:!h-28 md:!w-28 lg:!h-36 lg:!w-36"
-                  src={image4}
-                  alt=""
-                />
-              </Link>
-              <h3 className="pt-3">Image 5</h3>
-            </div> */}
         </div>
       </div>
     </div>

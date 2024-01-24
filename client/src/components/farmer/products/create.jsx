@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { updateProducts } from "../../state_slices/farmerProductsSlice";
 import { useDispatch } from "react-redux";
-import { updateBreadcrubTitleShow } from "../../state_slices/breadcrumbTitleSlice";
+import { updateBreadcrumbTitleShow } from "../../state_slices/breadcrumbTitleSlice";
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -100,8 +100,8 @@ export default function CreateProduct() {
   };
 
   useEffect(() => {
-    dispatch(updateBreadcrubTitleShow("Products / Create"));
-  }, []);
+    dispatch(updateBreadcrumbTitleShow("Products / Create"));
+  }, [dispatch]);
 
   return (
     <div className="create-product">

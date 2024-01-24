@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import axios from "axios";
 import { updateProducts } from "../../state_slices/farmerProductsSlice";
-import { updateBreadcrubTitleShow } from "../../state_slices/breadcrumbTitleSlice";
+import { updateBreadcrumbTitleShow } from "../../state_slices/breadcrumbTitleSlice";
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -134,7 +134,7 @@ export default function EditProduct() {
     setFoundProduct(foundProd);
 
     if (foundProd) {
-      dispatch(updateBreadcrubTitleShow('Products / Edit / '+ foundProd?.name))
+      dispatch(updateBreadcrumbTitleShow('Products / Edit / '+ foundProd?.name))
       form.setFieldsValue({
         name: foundProd.name,
         category: foundProd.category,
@@ -165,7 +165,7 @@ export default function EditProduct() {
           console.log("Error: ", error);
         });
     }
-  }, [products, params.id, foundProduct]);
+  }, [products, params.id, foundProduct, dispatch, form]);
   return (
     <div className="edit-product">
       <h1 className="heading-1">Edit Product</h1>

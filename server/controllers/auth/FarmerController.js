@@ -5,7 +5,6 @@ const path = require("path");
 const fs = require("fs");
 const secretKey = process.env.JWT_SECRET;
 
-console.log(process.env.BASE_URL)
 module.exports.register = async (req, res) => {
   try {
     const existingEmail = await Farmer.findOne({ email: req.body.email });

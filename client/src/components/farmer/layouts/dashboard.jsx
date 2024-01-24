@@ -142,15 +142,15 @@ export default function FarmerDashboard() {
     {
       key: "3",
       label: (
-        <a type="button" onClick={logout} className="flex items-center ">
+        <button type="button" onClick={logout} className="flex items-center ">
           <LogoutOutlined className="pr-2" /> Log Out
-        </a>
+        </button>
       ),
     },
   ];
   useEffect(() => {
     dispatch(updateSidebarShow(true));
-  }, [params]);
+  }, [params, dispatch]);
   return (
     <FarmerAuthenticator>
       <div className="App" style={{ textAlign: "left" }}>
@@ -223,7 +223,7 @@ export default function FarmerDashboard() {
                   <Outlet />
                 </div>
               </Content>
-              {/* <CareerDetails player={selectedPlayer} visible={visible} onClose={onClose} /> */}
+
               <Footer style={footerStyle}>Created by Kencliff</Footer>
             </Layout>
           </Layout>
